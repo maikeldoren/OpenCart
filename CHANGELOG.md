@@ -2,6 +2,11 @@
 
 # Changelog #
 
+#### Changes in release 13.4.1
+  + Fixed Klarna and Paypal failed payment issue
+  + Fixed double order confirmation issue
+  + Other bugfix and improvements
+
 #### Changes in release 13.4.0
   + Removed SOFORT and Paysafecard payment methods
   + Added Satispay method

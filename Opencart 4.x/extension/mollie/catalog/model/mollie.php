@@ -352,7 +352,7 @@ class Mollie extends \Opencart\System\Engine\Model {
 		}
 		$bank_account = isset($this->session->data['mollie_issuer']) ? $this->session->data['mollie_issuer'] : '';
 		if (!empty($order_id) && !empty($mollie_order_id) && !empty($method)) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "mollie_payments` SET `order_id` = '" . (int)$order_id . "', `mollie_order_id` = '" . $this->db->escape($mollie_order_id) . "', `method` = '" . $this->db->escape($method) . "', `bank_account` = '" . $this->db->escape($bank_account) . "', `payment_attempt` = '" . (int)$payment_attempt . "', date_modified = NOW() ON DUPLICATE KEY UPDATE `order_id` = '" . (int)$order_id . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "mollie_payments` SET `order_id` = '" . (int)$order_id . "', `mollie_order_id` = '" . $this->db->escape($mollie_order_id) . "', `method` = '" . $this->db->escape($method) . "', `bank_account` = '" . $this->db->escape($bank_account) . "', `payment_attempt` = '" . (int)$payment_attempt . "', `callback` = '0', date_modified = NOW() ON DUPLICATE KEY UPDATE `order_id` = '" . (int)$order_id . "'");
 
 			if ($this->db->countAffected() > 0) {
 				return TRUE;
@@ -371,7 +371,7 @@ class Mollie extends \Opencart\System\Engine\Model {
 		}
 		$bank_account = isset($this->session->data['mollie_issuer']) ? $this->session->data['mollie_issuer'] : '';
 		if (!empty($order_id) && !empty($mollie_payment_id) && !empty($method)) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "mollie_payments` SET `order_id` = '" . (int)$order_id . "', `transaction_id` = '" . $this->db->escape($mollie_payment_id) . "', `method` = '" . $this->db->escape($method) . "', `bank_account` = '" . $this->db->escape($bank_account) . "', `payment_attempt` = '" . (int)$payment_attempt . "', date_modified = NOW() ON DUPLICATE KEY UPDATE `order_id` = '" . (int)$order_id . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "mollie_payments` SET `order_id` = '" . (int)$order_id . "', `transaction_id` = '" . $this->db->escape($mollie_payment_id) . "', `method` = '" . $this->db->escape($method) . "', `bank_account` = '" . $this->db->escape($bank_account) . "', `payment_attempt` = '" . (int)$payment_attempt . "', `callback` = '0', date_modified = NOW() ON DUPLICATE KEY UPDATE `order_id` = '" . (int)$order_id . "'");
 
 			if ($this->db->countAffected() > 0) {
 				return TRUE;
@@ -465,6 +465,17 @@ class Mollie extends \Opencart\System\Engine\Model {
 			return $results->row;
 		}
 		return FALSE;
+	}
+
+	public function getPaymentById($id, $type)
+	{
+		if ($type == 'payment') {
+			$results = $this->db->query("SELECT * FROM `" . DB_PREFIX . "mollie_payments` WHERE `transaction_id` = '" . $this->db->escape($id) . "'");
+		} else {
+			$results = $this->db->query("SELECT * FROM `" . DB_PREFIX . "mollie_payments` WHERE `mollie_order_id` = '" . $this->db->escape($id) . "'");
+		}
+		
+		return $results->row;
 	}
 
 	public function cancelReturn($order_id, $mollie_order_id, $data) {
