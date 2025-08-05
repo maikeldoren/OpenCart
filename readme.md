@@ -31,13 +31,11 @@ them ready-made into your OpenCart webshop with this powerful plugin.
 
 # Payment methods #
 - Credit Cards (Visa / MasterCard &amp; American Express)
-- SOFORT banking
 - PayPal
 - SEPA Direct Debits
 - SEPA Bank Transfer
 - iDeal
 - Bancontact
-- Paysafecard
 - KBC/CBC Payment Button
 - Belfius Payment Button
 - CartaSi
@@ -60,6 +58,7 @@ them ready-made into your OpenCart webshop with this powerful plugin.
 - Alma
 - Riverty
 - Payconiq
+- Satispay
 
 Please go to the signup page to create a new Mollie account and start receiving payments in
 a couple of minutes. Contact info@mollie.com if you have any questions or comments about
@@ -84,12 +83,10 @@ Contact Mollie: [www.mollie.com/nl/about](https://www.mollie.com/nl/about) — i
 + [More info on iDEAL via Mollie](https://www.mollie.com/en/payments/ideal/)
 + [More info on credit card via Mollie](https://www.mollie.com/en/payments/creditcard/)
 + [More info on Bancontact via Mollie](https://www.mollie.com/en/payments/bancontact/)
-+ [More info on SOFORT Banking via Mollie](https://www.mollie.com/en/payments/sofort/)
 + [More info on SEPA Bank transfer via Mollie](https://www.mollie.com/en/payments/banktransfer/)
 + [More info on SEPA Direct debit via Mollie](https://www.mollie.com/en/payments/directdebit/)
 + [More info on PayPal via Mollie](https://www.mollie.com/en/payments/paypal/)
 + [More info on Belfius Direct Net via Mollie](https://www.mollie.com/en/payments/belfiusdirectnet/)
-+ [More info on paysafecard via Mollie](https://www.mollie.com/en/payments/paysafecard/)
 + [More info on Giftcards via Mollie](https://www.mollie.com/en/payments/gift-cards/)
 + [More info on EPS via Mollie](https://www.mollie.com/en/payments/eps/)
 + [More info on Klarna Pay Later via Mollie](https://www.mollie.com/en/payments/klarna-pay-later/)
@@ -98,7 +95,7 @@ Contact Mollie: [www.mollie.com/nl/about](https://www.mollie.com/nl/about) — i
 + [More info on Przelewy24 It via Mollie](https://www.mollie.com/en/payments/p24/)
 + [More info on Apple Pay via Mollie](https://www.mollie.com/en/payments/apple-pay/)
 + [More info on Vouchers via Mollie](https://www.mollie.com/en/payments/meal-eco-gift-vouchers/)
-+ [More info on IN3 via Mollie](https://www.mollie.com/en/payments/in3/)
++ [More info on iDeal IN3 via Mollie](https://www.mollie.com/en/payments/ideal-in3/)
 + [More info on MyBank via Mollie](https://www.mollie.com/en/payments/mybank/)
 + [More info on Billie via Mollie](https://www.mollie.com/en/payments/billie/)
 + [More info on Twint via Mollie](https://www.mollie.com/en/payments/twint/)
@@ -108,3 +105,4 @@ Contact Mollie: [www.mollie.com/nl/about](https://www.mollie.com/nl/about) — i
 + [More info on Alma Pay via Mollie](https://www.mollie.com/en/payments/alma/)
 + [More info on Riverty Pay via Mollie](https://www.mollie.com/en/payments/riverty/)
 + [More info on Payconiq Pay via Mollie](https://www.mollie.com/en/payments/payconiq/)
++ [More info on Satispay Pay via Mollie](https://www.mollie.com/en/payments/satispay/)
