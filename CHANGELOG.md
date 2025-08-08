@@ -2,6 +2,9 @@
 
 # Changelog #
 
+#### Changes in release 13.4.2
+  + Missing callback column error fix
+
 #### Changes in release 13.4.1
   + Fixed Klarna and Paypal failed payment issue
   + Fixed double order confirmation issue
