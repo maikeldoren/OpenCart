@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
 class OrganizationCollection extends \Mollie\Api\Resources\CursorCollection
@@ -11,6 +13,7 @@ class OrganizationCollection extends \Mollie\Api\Resources\CursorCollection
     {
         return "organizations";
     }
+    
     /**
      * @return BaseResource
      */

@@ -1,18 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\Resources\LazyCollection;
 use Mollie\Api\Resources\Order;
 use Mollie\Api\Resources\OrderCollection;
+
 class OrderEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "orders";
+    
     /**
      * @var string
      */
     public const RESOURCE_ID_PREFIX = 'ord_';
+    
     /**
      * Get the object that is used by this API endpoint. Every API endpoint uses one
      * type of object.
@@ -23,6 +28,7 @@ class OrderEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\Order($this->client);
     }
+    
     /**
      * Get the collection object that is used by this API endpoint. Every API
      * endpoint uses one type of collection object.
@@ -36,6 +42,7 @@ class OrderEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\OrderCollection($this->client, $count, $_links);
     }
+    
     /**
      * Creates a order in Mollie.
      *
@@ -49,6 +56,7 @@ class OrderEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->rest_create($data, $filters);
     }
+    
     /**
      * Update a specific Order resource
      *
@@ -67,6 +75,7 @@ class OrderEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
         }
         return parent::rest_update($orderId, $data);
     }
+    
     /**
      * Retrieve a single order from Mollie.
      *
@@ -84,6 +93,7 @@ class OrderEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
         }
         return parent::rest_read($orderId, $parameters);
     }
+    
     /**
      * Cancel the given Order.
      *
@@ -103,11 +113,12 @@ class OrderEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->rest_delete($orderId, $parameters);
     }
+    
     /**
      * Retrieves a collection of Orders from Mollie.
      *
-     * @param string $from The first order ID you want to include in your list.
-     * @param int $limit
+     * @param string|null $from The first order ID you want to include in your list.
+     * @param int|null $limit
      * @param array $parameters
      *
      * @return OrderCollection
@@ -117,11 +128,12 @@ class OrderEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->rest_list($from, $limit, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over orders retrieved from Mollie.
      *
-     * @param string $from The first order ID you want to include in your list.
-     * @param int $limit
+     * @param string|null $from The first order ID you want to include in your list.
+     * @param int|null $limit
      * @param array $parameters
      * @param bool $iterateBackwards Set to true for reverse order iteration (default is false).
      *

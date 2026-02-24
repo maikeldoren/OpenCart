@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Exceptions\ApiException;
@@ -7,13 +9,16 @@ use Mollie\Api\Resources\Balance;
 use Mollie\Api\Resources\BalanceCollection;
 use Mollie\Api\Resources\BaseCollection;
 use Mollie\Api\Resources\LazyCollection;
+
 class BalanceEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     /**
      * @var string
      */
     const RESOURCE_ID_PREFIX = 'bal_';
+    
     protected $resourcePath = "balances";
+    
     /**
      * @inheritDoc
      */
@@ -21,6 +26,7 @@ class BalanceEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\BalanceCollection($this->client, $count, $_links);
     }
+    
     /**
      * @inheritDoc
      */
@@ -28,6 +34,7 @@ class BalanceEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\Balance($this->client);
     }
+    
     /**
      * Retrieve a single balance from Mollie.
      *
@@ -45,6 +52,7 @@ class BalanceEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
         }
         return parent::rest_read($balanceId, $parameters);
     }
+    
     /**
      * Retrieve the primary balance from Mollie.
      *
@@ -58,6 +66,7 @@ class BalanceEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return parent::rest_read("primary", $parameters);
     }
+    
     /**
      * Retrieves a collection of Balances from Mollie.
      *
@@ -72,6 +81,7 @@ class BalanceEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->rest_list($from, $limit, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over balances retrieved from Mollie.
      *

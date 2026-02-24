@@ -59,12 +59,14 @@ $_['text_payment_link_full_title']	    = 'Lien de paiement Mollie - Montant tota
 $_['text_payment_link_open_title']	    = 'Lien de paiement Mollie - Montant ouvert';
 $_['text_cancelled']                    = 'Le paiement récurrent a été annulé';
 $_['text_subscription_cancel_confirm']  = 'Voulez-vous annuler l\'abonnement ?';
+$_['text_mollie_open_payment'] = 'Il y a encore un paiement en attente de <strong>%s</strong> pour cette commande.';
 
 // Button
 $_['button_retry']          = 'Retour à la page de paiement';
 $_['button_report']         = 'Report Error';
 $_['button_submit']         = 'Soumettre';
 $_['button_subscription_cancel'] = 'Annuler l\'abonnement';
+$_['button_mollie_pay_now']    = 'Payer maintenant';
 
 // Entry
 $_['entry_card_holder']     	= 'Card Holder Name';

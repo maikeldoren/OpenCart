@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\HttpAdapter;
 
 use _PhpScoperbbe44365fb20\Composer\CaBundle\CaBundle;
@@ -11,24 +13,29 @@ use _PhpScoperbbe44365fb20\GuzzleHttp\Psr7\Request;
 use _PhpScoperbbe44365fb20\GuzzleHttp\RequestOptions as GuzzleRequestOptions;
 use Mollie\Api\Exceptions\ApiException;
 use _PhpScoperbbe44365fb20\Psr\Http\Message\ResponseInterface;
+
 final class Guzzle6And7MollieHttpAdapter implements \Mollie\Api\HttpAdapter\MollieHttpAdapterInterface
 {
     /**
      * Default response timeout (in seconds).
      */
     public const DEFAULT_TIMEOUT = 10;
+    
     /**
      * Default connect timeout (in seconds).
      */
     public const DEFAULT_CONNECT_TIMEOUT = 2;
+    
     /**
      * HTTP status code for an empty ok response.
      */
     public const HTTP_NO_CONTENT = 204;
+    
     /**
      * @var \GuzzleHttp\ClientInterface
      */
     protected $httpClient;
+    
     /**
      * Whether debugging is enabled. If debugging mode is enabled, the request will
      * be included in the ApiException. By default, debugging is disabled to prevent
@@ -37,10 +44,12 @@ final class Guzzle6And7MollieHttpAdapter implements \Mollie\Api\HttpAdapter\Moll
      * @var bool
      */
     protected $debugging = \false;
+    
     public function __construct(\_PhpScoperbbe44365fb20\GuzzleHttp\ClientInterface $httpClient)
     {
         $this->httpClient = $httpClient;
     }
+    
     /**
      * Instantiate a default adapter with sane configuration for Guzzle 6 or 7.
      *
@@ -54,6 +63,7 @@ final class Guzzle6And7MollieHttpAdapter implements \Mollie\Api\HttpAdapter\Moll
         $client = new \_PhpScoperbbe44365fb20\GuzzleHttp\Client([\_PhpScoperbbe44365fb20\GuzzleHttp\RequestOptions::VERIFY => \_PhpScoperbbe44365fb20\Composer\CaBundle\CaBundle::getBundledCaBundlePath(), \_PhpScoperbbe44365fb20\GuzzleHttp\RequestOptions::TIMEOUT => self::DEFAULT_TIMEOUT, \_PhpScoperbbe44365fb20\GuzzleHttp\RequestOptions::CONNECT_TIMEOUT => self::DEFAULT_CONNECT_TIMEOUT, 'handler' => $handlerStack]);
         return new \Mollie\Api\HttpAdapter\Guzzle6And7MollieHttpAdapter($client);
     }
+    
     /**
      * Send a request to the specified Mollie api url.
      *
@@ -84,6 +94,7 @@ final class Guzzle6And7MollieHttpAdapter implements \Mollie\Api\HttpAdapter\Moll
         }
         return $this->parseResponseBody($response);
     }
+    
     /**
      * Whether this http adapter provides a debugging mode. If debugging mode is enabled, the
      * request will be included in the ApiException.
@@ -94,6 +105,7 @@ final class Guzzle6And7MollieHttpAdapter implements \Mollie\Api\HttpAdapter\Moll
     {
         return \true;
     }
+    
     /**
      * Whether debugging is enabled. If debugging mode is enabled, the request will
      * be included in the ApiException. By default, debugging is disabled to prevent
@@ -105,6 +117,7 @@ final class Guzzle6And7MollieHttpAdapter implements \Mollie\Api\HttpAdapter\Moll
     {
         return $this->debugging;
     }
+    
     /**
      * Enable debugging. If debugging mode is enabled, the request will
      * be included in the ApiException. By default, debugging is disabled to prevent
@@ -114,6 +127,7 @@ final class Guzzle6And7MollieHttpAdapter implements \Mollie\Api\HttpAdapter\Moll
     {
         $this->debugging = \true;
     }
+    
     /**
      * Disable debugging. If debugging mode is enabled, the request will
      * be included in the ApiException. By default, debugging is disabled to prevent
@@ -123,6 +137,7 @@ final class Guzzle6And7MollieHttpAdapter implements \Mollie\Api\HttpAdapter\Moll
     {
         $this->debugging = \false;
     }
+    
     /**
      * Parse the PSR-7 Response body
      *
@@ -148,6 +163,7 @@ final class Guzzle6And7MollieHttpAdapter implements \Mollie\Api\HttpAdapter\Moll
         }
         return $object;
     }
+    
     /**
      * The version number for the underlying http client, if available. This is used to report the UserAgent to Mollie,
      * for convenient support.

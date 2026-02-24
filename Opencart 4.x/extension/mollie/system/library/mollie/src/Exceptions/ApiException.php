@@ -1,36 +1,45 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Exceptions;
 
 use DateTime;
+
 class ApiException extends \Exception
 {
     /**
      * @var string
      */
     protected $field;
+    
     /**
      * @var string
      */
     protected $plainMessage;
+    
     /**
      * @var \Psr\Http\Message\RequestInterface|null
      */
     protected $request;
+    
     /**
      * @var \Psr\Http\Message\ResponseInterface|null
      */
     protected $response;
+    
     /**
      * ISO8601 representation of the moment this exception was thrown
      *
      * @var \DateTimeImmutable
      */
     protected $raisedAt;
+    
     /**
      * @var array
      */
     protected $links = [];
+    
     /**
      * @param string $message
      * @param int $code
@@ -46,10 +55,12 @@ class ApiException extends \Exception
         $this->raisedAt = new \DateTimeImmutable();
         $formattedRaisedAt = $this->raisedAt->format(\DateTime::ISO8601);
         $message = "[{$formattedRaisedAt}] " . $message;
+        
         if (!empty($field)) {
             $this->field = (string) $field;
             $message .= ". Field: {$this->field}";
         }
+        
         if (!empty($response)) {
             $this->response = $response;
             $object = static::parseResponseBody($this->response);
@@ -59,9 +70,11 @@ class ApiException extends \Exception
                 }
             }
         }
+        
         if ($this->hasLink('documentation')) {
             $message .= ". Documentation: {$this->getDocumentationUrl()}";
         }
+        
         $this->request = $request;
         if ($request) {
             $requestBody = $request->getBody()->__toString();
@@ -69,8 +82,10 @@ class ApiException extends \Exception
                 $message .= ". Request body: {$requestBody}";
             }
         }
+        
         parent::__construct($message, $code, $previous);
     }
+    
     /**
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param \Psr\Http\Message\RequestInterface $request
@@ -87,6 +102,7 @@ class ApiException extends \Exception
         }
         return new self("Error executing API call ({$object->status}: {$object->title}): {$object->detail}", $response->getStatusCode(), $field, $request, $response, $previous);
     }
+    
     /**
      * @return string|null
      */
@@ -94,6 +110,7 @@ class ApiException extends \Exception
     {
         return $this->field;
     }
+    
     /**
      * @return string|null
      */
@@ -101,6 +118,7 @@ class ApiException extends \Exception
     {
         return $this->getUrl('documentation');
     }
+    
     /**
      * @return string|null
      */
@@ -108,6 +126,7 @@ class ApiException extends \Exception
     {
         return $this->getUrl('dashboard');
     }
+    
     /**
      * @return \Psr\Http\Message\ResponseInterface|null
      */
@@ -115,6 +134,7 @@ class ApiException extends \Exception
     {
         return $this->response;
     }
+    
     /**
      * @return bool
      */
@@ -122,6 +142,7 @@ class ApiException extends \Exception
     {
         return $this->response !== null;
     }
+    
     /**
      * @param string $key
      * @return bool
@@ -130,6 +151,7 @@ class ApiException extends \Exception
     {
         return \array_key_exists($key, $this->links);
     }
+    
     /**
      * @param string $key
      * @return mixed|null
@@ -141,6 +163,7 @@ class ApiException extends \Exception
         }
         return null;
     }
+    
     /**
      * @param string $key
      * @return null
@@ -152,6 +175,7 @@ class ApiException extends \Exception
         }
         return null;
     }
+    
     /**
      * @return \Psr\Http\Message\RequestInterface
      */
@@ -159,6 +183,7 @@ class ApiException extends \Exception
     {
         return $this->request;
     }
+    
     /**
      * Get the ISO8601 representation of the moment this exception was thrown
      *
@@ -168,6 +193,7 @@ class ApiException extends \Exception
     {
         return $this->raisedAt;
     }
+    
     /**
      * @param \Psr\Http\Message\ResponseInterface $response
      * @return \stdClass
@@ -182,6 +208,7 @@ class ApiException extends \Exception
         }
         return $object;
     }
+    
     /**
      * Retrieve the plain exception message.
      *

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Exceptions\ApiException;
@@ -8,13 +10,16 @@ use Mollie\Api\Resources\LazyCollection;
 use Mollie\Api\Resources\ResourceFactory;
 use Mollie\Api\Resources\Subscription;
 use Mollie\Api\Resources\SubscriptionCollection;
+
 class SubscriptionEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "customers_subscriptions";
+    
     /**
      * @var string
      */
     public const RESOURCE_ID_PREFIX = 'sub_';
+    
     /**
      * Get the object that is used by this API endpoint. Every API endpoint uses one type of object.
      *
@@ -24,6 +29,7 @@ class SubscriptionEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstr
     {
         return new \Mollie\Api\Resources\Subscription($this->client);
     }
+    
     /**
      * Get the collection object that is used by this API endpoint. Every API endpoint uses one type of collection object.
      *
@@ -36,6 +42,7 @@ class SubscriptionEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstr
     {
         return new \Mollie\Api\Resources\SubscriptionCollection($this->client, $count, $_links);
     }
+    
     /**
      * Create a subscription for a Customer
      *
@@ -50,6 +57,7 @@ class SubscriptionEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstr
     {
         return $this->createForId($customer->id, $options, $filters);
     }
+    
     /**
      * Create a subscription for a Customer
      *
@@ -65,6 +73,7 @@ class SubscriptionEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstr
         $this->parentId = $customerId;
         return parent::rest_create($options, $filters);
     }
+    
     /**
      * Update a specific Subscription resource.
      *
@@ -86,6 +95,7 @@ class SubscriptionEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstr
         $this->parentId = $customerId;
         return parent::rest_update($subscriptionId, $data);
     }
+    
     /**
      * @param Customer $customer
      * @param string $subscriptionId
@@ -98,6 +108,7 @@ class SubscriptionEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstr
     {
         return $this->getForId($customer->id, $subscriptionId, $parameters);
     }
+    
     /**
      * @param string $customerId
      * @param string $subscriptionId
@@ -111,19 +122,21 @@ class SubscriptionEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstr
         $this->parentId = $customerId;
         return parent::rest_read($subscriptionId, $parameters);
     }
+    
     /**
      * @param Customer $customer
-     * @param string $from The first resource ID you want to include in your list.
-     * @param int $limit
+     * @param string|null $from The first resource ID you want to include in your list.
+     * @param int|null $limit
      * @param array $parameters
      *
      * @return SubscriptionCollection
      * @throws ApiException
      */
-    public function listFor(\Mollie\Api\Resources\Customer $customer, $from = null, $limit = null, array $parameters = [])
+    public function listFor(\Mollie\Api\Resources\Customer $customer, ?string $from = null, ?int $limit = null, array $parameters = [])
     {
         return $this->listForId($customer->id, $from, $limit, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over subscriptions for the given customer, retrieved from Mollie.
      *
@@ -139,20 +152,22 @@ class SubscriptionEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstr
     {
         return $this->iteratorForId($customer->id, $from, $limit, $parameters, $iterateBackwards);
     }
+    
     /**
      * @param string $customerId
-     * @param string $from The first resource ID you want to include in your list.
-     * @param int $limit
+     * @param string|null $from The first resource ID you want to include in your list.
+     * @param int|null $limit
      * @param array $parameters
      *
      * @return SubscriptionCollection
      * @throws ApiException
      */
-    public function listForId($customerId, $from = null, $limit = null, array $parameters = [])
+    public function listForId($customerId, ?string $from = null, ?int $limit = null, array $parameters = [])
     {
         $this->parentId = $customerId;
         return parent::rest_list($from, $limit, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over subscriptions for the given customer id, retrieved from Mollie.
      *
@@ -169,6 +184,7 @@ class SubscriptionEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstr
         $this->parentId = $customerId;
         return $this->rest_iterator($from, $limit, $parameters, $iterateBackwards);
     }
+    
     /**
      * @param Customer $customer
      * @param string $subscriptionId
@@ -181,6 +197,7 @@ class SubscriptionEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstr
     {
         return $this->cancelForId($customer->id, $subscriptionId, $data);
     }
+    
     /**
      * @param string $customerId
      * @param string $subscriptionId
@@ -194,17 +211,18 @@ class SubscriptionEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstr
         $this->parentId = $customerId;
         return parent::rest_delete($subscriptionId, $data);
     }
+    
     /**
      * Retrieves a collection of Subscriptions from Mollie.
      *
-     * @param string $from The first payment ID you want to include in your list.
-     * @param int $limit
+     * @param string|null $from The first payment ID you want to include in your list.
+     * @param int|null $limit
      * @param array $parameters
      *
      * @return SubscriptionCollection
      * @throws ApiException
      */
-    public function page($from = null, $limit = null, array $parameters = [])
+    public function page(?string $from = null, ?int $limit = null, array $parameters = [])
     {
         $filters = \array_merge(["from" => $from, "limit" => $limit], $parameters);
         $apiPath = 'subscriptions' . $this->buildQueryString($filters);
@@ -216,6 +234,7 @@ class SubscriptionEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstr
         }
         return $collection;
     }
+    
     /**
      * Create an iterator for iterating over subscriptions retrieved from Mollie.
      *

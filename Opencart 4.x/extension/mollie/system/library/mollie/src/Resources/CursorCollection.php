@@ -1,15 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
 use Generator;
 use Mollie\Api\MollieApiClient;
+
 abstract class CursorCollection extends \Mollie\Api\Resources\BaseCollection
 {
     /**
      * @var MollieApiClient
      */
     protected $client;
+    
     /**
      * @param MollieApiClient $client
      * @param int $count
@@ -20,10 +24,12 @@ abstract class CursorCollection extends \Mollie\Api\Resources\BaseCollection
         parent::__construct($count, $_links);
         $this->client = $client;
     }
+    
     /**
      * @return BaseResource
      */
     protected abstract function createResourceObject();
+    
     /**
      * Return the next set of resources when available
      *
@@ -42,6 +48,7 @@ abstract class CursorCollection extends \Mollie\Api\Resources\BaseCollection
         }
         return $collection;
     }
+    
     /**
      * Return the previous set of resources when available
      *
@@ -60,6 +67,7 @@ abstract class CursorCollection extends \Mollie\Api\Resources\BaseCollection
         }
         return $collection;
     }
+    
     /**
      * Determine whether the collection has a next page available.
      *
@@ -69,6 +77,7 @@ abstract class CursorCollection extends \Mollie\Api\Resources\BaseCollection
     {
         return isset($this->_links->next->href);
     }
+    
     /**
      * Determine whether the collection has a previous page available.
      *
@@ -78,6 +87,7 @@ abstract class CursorCollection extends \Mollie\Api\Resources\BaseCollection
     {
         return isset($this->_links->previous->href);
     }
+    
     /**
      * Iterate over a CursorCollection and yield its elements.
      *

@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\MollieApiClient;
 use Mollie\Api\Resources\BaseResource;
 use Mollie\Api\Resources\ResourceFactory;
+
 abstract class EndpointAbstract
 {
     public const REST_CREATE = \Mollie\Api\MollieApiClient::HTTP_POST;
@@ -13,18 +16,22 @@ abstract class EndpointAbstract
     public const REST_READ = \Mollie\Api\MollieApiClient::HTTP_GET;
     public const REST_LIST = \Mollie\Api\MollieApiClient::HTTP_GET;
     public const REST_DELETE = \Mollie\Api\MollieApiClient::HTTP_DELETE;
+    
     /**
      * @var MollieApiClient
      */
     protected $client;
+    
     /**
      * @var string
      */
     protected $resourcePath;
+    
     /**
      * @var string|null
      */
     protected $parentId;
+    
     /**
      * @param MollieApiClient $api
      */
@@ -32,6 +39,7 @@ abstract class EndpointAbstract
     {
         $this->client = $api;
     }
+    
     /**
      * @param array $filters
      * @return string
@@ -51,6 +59,7 @@ abstract class EndpointAbstract
         }
         return "?" . \http_build_query($filters, "", "&");
     }
+    
     /**
      * @param array $body
      * @param array $filters
@@ -62,6 +71,7 @@ abstract class EndpointAbstract
         $result = $this->client->performHttpCall(self::REST_CREATE, $this->getResourcePath() . $this->buildQueryString($filters), $this->parseRequestBody($body));
         return \Mollie\Api\Resources\ResourceFactory::createFromApiResult($result, $this->getResourceObject());
     }
+    
     /**
      * Sends a PATCH request to a single Mollie API object.
      *
@@ -83,6 +93,7 @@ abstract class EndpointAbstract
         }
         return \Mollie\Api\Resources\ResourceFactory::createFromApiResult($result, $this->getResourceObject());
     }
+    
     /**
      * Retrieves a single object from the REST API.
      *
@@ -100,6 +111,7 @@ abstract class EndpointAbstract
         $result = $this->client->performHttpCall(self::REST_READ, "{$this->getResourcePath()}/{$id}" . $this->buildQueryString($filters));
         return \Mollie\Api\Resources\ResourceFactory::createFromApiResult($result, $this->getResourceObject());
     }
+    
     /**
      * Sends a DELETE request to a single Mollie API object.
      *
@@ -121,12 +133,14 @@ abstract class EndpointAbstract
         }
         return \Mollie\Api\Resources\ResourceFactory::createFromApiResult($result, $this->getResourceObject());
     }
+    
     /**
      * Get the object that is used by this API endpoint. Every API endpoint uses one type of object.
      *
      * @return BaseResource
      */
     protected abstract function getResourceObject();
+    
     /**
      * @param string $resourcePath
      */
@@ -134,6 +148,7 @@ abstract class EndpointAbstract
     {
         $this->resourcePath = \strtolower($resourcePath);
     }
+    
     /**
      * @return string
      * @throws ApiException
@@ -149,6 +164,7 @@ abstract class EndpointAbstract
         }
         return $this->resourcePath;
     }
+    
     /**
      * @param array $body
      * @return null|string

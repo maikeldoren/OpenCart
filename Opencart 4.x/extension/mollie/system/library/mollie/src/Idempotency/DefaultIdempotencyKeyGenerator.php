@@ -1,19 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Idempotency;
 
 use Mollie\Api\Exceptions\IncompatiblePlatform;
+
 class DefaultIdempotencyKeyGenerator implements \Mollie\Api\Idempotency\IdempotencyKeyGeneratorContract
 {
     const DEFAULT_LENGTH = 16;
+    
     /**
      * @var int
      */
     protected $length;
-    public function __construct($length = self::DEFAULT_LENGTH)
+    
+    public function __construct(int $length = self::DEFAULT_LENGTH)
     {
         $this->length = $length;
     }
+    
     /**
      * @throws \Mollie\Api\Exceptions\IncompatiblePlatform
      * @return string

@@ -1,14 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Resources\LazyCollection;
 use Mollie\Api\Resources\Payment;
 use Mollie\Api\Resources\Refund;
 use Mollie\Api\Resources\RefundCollection;
+
 class PaymentRefundEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "payments_refunds";
+    
     /**
      * Get the object that is used by this API endpoint. Every API endpoint uses one type of object.
      *
@@ -18,6 +22,7 @@ class PaymentRefundEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbst
     {
         return new \Mollie\Api\Resources\Refund($this->client);
     }
+    
     /**
      * Get the collection object that is used by this API endpoint. Every API endpoint uses one type of collection object.
      *
@@ -30,6 +35,7 @@ class PaymentRefundEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbst
     {
         return new \Mollie\Api\Resources\RefundCollection($this->client, $count, $_links);
     }
+    
     /**
      * @param Payment $payment
      * @param string $refundId
@@ -42,6 +48,7 @@ class PaymentRefundEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbst
     {
         return $this->getForId($payment->id, $refundId, $parameters);
     }
+    
     /**
      * @param string $paymentId
      * @param string $refundId
@@ -55,6 +62,7 @@ class PaymentRefundEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbst
         $this->parentId = $paymentId;
         return parent::rest_read($refundId, $parameters);
     }
+    
     /**
      * @param Payment $payment
      * @param array $parameters
@@ -66,6 +74,7 @@ class PaymentRefundEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbst
     {
         return $this->listForId($payment->id, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over refunds for the given payment, retrieved from Mollie.
      *
@@ -81,6 +90,7 @@ class PaymentRefundEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbst
     {
         return $this->iteratorForId($payment->id, $from, $limit, $parameters, $iterateBackwards);
     }
+    
     /**
      * @param string $paymentId
      * @param array $parameters
@@ -93,6 +103,7 @@ class PaymentRefundEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbst
         $this->parentId = $paymentId;
         return parent::rest_list(null, null, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over refunds for the given payment id, retrieved from Mollie.
      *
@@ -109,6 +120,7 @@ class PaymentRefundEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbst
         $this->parentId = $paymentId;
         return $this->rest_iterator($from, $limit, $parameters, $iterateBackwards);
     }
+    
     /**
      * Creates a refund for a specific payment.
      *
@@ -123,6 +135,7 @@ class PaymentRefundEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbst
     {
         return $this->createForId($payment->id, $data, $filters);
     }
+    
     /**
      * Creates a refund for a specific payment.
      *
@@ -138,6 +151,7 @@ class PaymentRefundEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbst
         $this->parentId = $paymentId;
         return parent::rest_create($data, $filters);
     }
+    
     /**
      * @param \Mollie\Api\Resources\Payment $payment
      * @param string $refundId
@@ -151,6 +165,7 @@ class PaymentRefundEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbst
         $this->parentId = $payment->id;
         return $this->cancelForId($payment->id, $refundId, $parameters);
     }
+    
     /**
      * @param string $paymentId
      * @param string $refundId

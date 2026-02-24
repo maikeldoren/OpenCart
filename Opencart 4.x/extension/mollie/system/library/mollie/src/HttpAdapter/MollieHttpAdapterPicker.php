@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\HttpAdapter;
 
 use Mollie\Api\Exceptions\UnrecognizedClientException;
+
 class MollieHttpAdapterPicker implements \Mollie\Api\HttpAdapter\MollieHttpAdapterPickerInterface
 {
     /**
@@ -22,14 +25,18 @@ class MollieHttpAdapterPicker implements \Mollie\Api\HttpAdapter\MollieHttpAdapt
             }
             return new \Mollie\Api\HttpAdapter\CurlMollieHttpAdapter();
         }
+        
         if ($httpClient instanceof \Mollie\Api\HttpAdapter\MollieHttpAdapterInterface) {
             return $httpClient;
         }
+        
         if ($httpClient instanceof \_PhpScoperbbe44365fb20\GuzzleHttp\ClientInterface) {
             return new \Mollie\Api\HttpAdapter\Guzzle6And7MollieHttpAdapter($httpClient);
         }
+        
         throw new \Mollie\Api\Exceptions\UnrecognizedClientException('The provided http client or adapter was not recognized.');
     }
+    
     /**
      * @return bool
      */
@@ -37,6 +44,7 @@ class MollieHttpAdapterPicker implements \Mollie\Api\HttpAdapter\MollieHttpAdapt
     {
         return \interface_exists('\\' . \_PhpScoperbbe44365fb20\GuzzleHttp\ClientInterface::class);
     }
+    
     /**
      * @return int|null
      */

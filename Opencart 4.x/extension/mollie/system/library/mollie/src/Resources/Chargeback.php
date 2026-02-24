@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
 /**
@@ -16,18 +18,21 @@ class Chargeback extends \Mollie\Api\Resources\BaseResource
      * @var string
      */
     public $resource;
+    
     /**
      * Id of the payment method.
      *
      * @var string
      */
     public $id;
+    
     /**
      * The $amount that was refunded.
      *
      * @var \stdClass
      */
     public $amount;
+    
     /**
      * UTC datetime the payment was created in ISO-8601 format.
      *
@@ -35,24 +40,28 @@ class Chargeback extends \Mollie\Api\Resources\BaseResource
      * @var string|null
      */
     public $createdAt;
+    
     /**
      * The payment id that was refunded.
      *
      * @var string
      */
     public $paymentId;
+    
     /**
      * The settlement amount
      *
      * @var \stdClass
      */
     public $settlementAmount;
+    
     /**
      * The chargeback reason
      *
      * @var \stdClass|null
      */
     public $reason;
+    
     /**
      * UTC datetime the date and time the chargeback was reversed in ISO-8601 format.
      *
@@ -60,6 +69,7 @@ class Chargeback extends \Mollie\Api\Resources\BaseResource
      * @var string|null
      */
     public $reversedAt;
+    
     /**
      * @var \stdClass
      */

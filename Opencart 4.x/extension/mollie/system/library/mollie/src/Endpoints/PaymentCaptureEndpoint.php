@@ -1,14 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Resources\Capture;
 use Mollie\Api\Resources\CaptureCollection;
 use Mollie\Api\Resources\LazyCollection;
 use Mollie\Api\Resources\Payment;
+
 class PaymentCaptureEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "payments_captures";
+    
     /**
      * Get the object that is used by this API endpoint. Every API endpoint uses one type of object.
      *
@@ -18,6 +22,7 @@ class PaymentCaptureEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbs
     {
         return new \Mollie\Api\Resources\Capture($this->client);
     }
+    
     /**
      * Get the collection object that is used by this API endpoint. Every API endpoint uses one type of collection object.
      *
@@ -30,6 +35,7 @@ class PaymentCaptureEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbs
     {
         return new \Mollie\Api\Resources\CaptureCollection($this->client, $count, $_links);
     }
+    
     /**
      * Creates a payment capture in Mollie.
      *
@@ -44,6 +50,7 @@ class PaymentCaptureEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbs
     {
         return $this->createForId($payment->id, $data, $filters);
     }
+    
     /**
      * Creates a payment capture in Mollie.
      *
@@ -59,6 +66,7 @@ class PaymentCaptureEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbs
         $this->parentId = $paymentId;
         return $this->rest_create($data, $filters);
     }
+    
     /**
      * @param Payment $payment
      * @param string $captureId
@@ -71,6 +79,7 @@ class PaymentCaptureEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbs
     {
         return $this->getForId($payment->id, $captureId, $parameters);
     }
+    
     /**
      * @param string $paymentId
      * @param string $captureId
@@ -84,6 +93,7 @@ class PaymentCaptureEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbs
         $this->parentId = $paymentId;
         return parent::rest_read($captureId, $parameters);
     }
+    
     /**
      * @param Payment $payment
      * @param array $parameters
@@ -95,6 +105,7 @@ class PaymentCaptureEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbs
     {
         return $this->listForId($payment->id, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over captures for the given payment, retrieved from Mollie.
      *
@@ -110,6 +121,7 @@ class PaymentCaptureEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbs
     {
         return $this->iteratorForId($payment->id, $from, $limit, $parameters, $iterateBackwards);
     }
+    
     /**
      * @param string $paymentId
      * @param array $parameters
@@ -122,6 +134,7 @@ class PaymentCaptureEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbs
         $this->parentId = $paymentId;
         return parent::rest_list(null, null, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over captures for the given payment id, retrieved from Mollie.
      *

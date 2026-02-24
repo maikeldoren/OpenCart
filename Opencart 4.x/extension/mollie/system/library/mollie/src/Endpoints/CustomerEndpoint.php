@@ -1,18 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\Resources\Customer;
 use Mollie\Api\Resources\CustomerCollection;
 use Mollie\Api\Resources\LazyCollection;
+
 class CustomerEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "customers";
+    
     /**
      * @var string
      */
     public const RESOURCE_ID_PREFIX = 'cst_';
+    
     /**
      * Get the object that is used by this API endpoint. Every API endpoint uses one type of object.
      *
@@ -22,6 +27,7 @@ class CustomerEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\Customer($this->client);
     }
+    
     /**
      * Get the collection object that is used by this API endpoint. Every API endpoint uses one type of collection object.
      *
@@ -34,6 +40,7 @@ class CustomerEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\CustomerCollection($this->client, $count, $_links);
     }
+    
     /**
      * Creates a customer in Mollie.
      *
@@ -47,6 +54,7 @@ class CustomerEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->rest_create($data, $filters);
     }
+    
     /**
      * Retrieve a single customer from Mollie.
      *
@@ -61,6 +69,7 @@ class CustomerEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->rest_read($customerId, $parameters);
     }
+    
     /**
      * Update a specific Customer resource.
      *
@@ -79,6 +88,7 @@ class CustomerEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
         }
         return parent::rest_update($customerId, $data);
     }
+    
     /**
      * Deletes the given Customer.
      *
@@ -95,6 +105,7 @@ class CustomerEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->rest_delete($customerId, $data);
     }
+    
     /**
      * Retrieves a collection of Customers from Mollie.
      *
@@ -109,6 +120,7 @@ class CustomerEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->rest_list($from, $limit, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over customers retrieved from Mollie.
      *

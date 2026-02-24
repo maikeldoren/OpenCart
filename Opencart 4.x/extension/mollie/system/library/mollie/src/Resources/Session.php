@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
 use Mollie\Api\Types\SessionStatus;
+
 class Session extends \Mollie\Api\Resources\BaseResource
 {
     use HasPresetOptions;
+    
     /**
      * The session's unique identifier,
      *
@@ -13,12 +17,14 @@ class Session extends \Mollie\Api\Resources\BaseResource
      * @var string
      */
     public $id;
+    
     /**
      * Status of the session.
      *
      * @var string
      */
     public $status;
+    
     /**
      * UTC datetime indicating the time at which the Session failed in ISO-8601 format.
      *
@@ -26,18 +32,21 @@ class Session extends \Mollie\Api\Resources\BaseResource
      * @var string|null
      */
     public $failedAt;
+    
     /**
      * Unique identifier to record the Userʼs authentication with a method
      *
      * @var string
      */
     public $authenticationId;
+    
     /**
      * Indicates the next action to take in the payment preparation flow.
      *
      * @var string
      */
     public $nextAction;
+    
     /**
      * The URL the buyer will be redirected to in case the
      * payment preparation process requires a 3rd party redirect.
@@ -45,6 +54,7 @@ class Session extends \Mollie\Api\Resources\BaseResource
      * @var string
      */
     public $redirectUrl;
+    
     /**
      * The URL the buyer will be redirected to if they
      * cancel their payment during a 3rd party redirect..
@@ -52,6 +62,7 @@ class Session extends \Mollie\Api\Resources\BaseResource
      * @var string
      */
     public $cancelUrl;
+    
     /**
      * The amount you intend to charge containing the value and currency.
      *
@@ -61,24 +72,28 @@ class Session extends \Mollie\Api\Resources\BaseResource
      * @var \stdClass
      */
     public $amount;
+    
     /**
      * Description of the payment intent.
      *
      * @var string
      */
     public $description;
+    
     /**
      * Payment method currently selected by the shopper.
      *
      * @var string
      */
     public $method;
+    
     /**
      * All additional information relating to the selected method.
      *
      * @var \stdClass
      */
     public $methodDetails;
+    
     /**
      * The person and the address the payment is shipped to.
      *
@@ -86,6 +101,7 @@ class Session extends \Mollie\Api\Resources\BaseResource
      * @var \stdClass
      */
     public $shippingAddress;
+    
     /**
      * The person and the address the payment is billed to.
      *
@@ -94,27 +110,33 @@ class Session extends \Mollie\Api\Resources\BaseResource
      *
      */
     public $billingAddress;
+    
     /**
      * An object with several URL objects relevant to the customer. Every URL object will contain an href and a type field.
      * @var \stdClass
      */
     public $_links;
+    
     public function isCreated()
     {
         return $this->status === \Mollie\Api\Types\SessionStatus::STATUS_CREATED;
     }
+    
     public function isReadyForProcessing()
     {
         return $this->status === \Mollie\Api\Types\SessionStatus::STATUS_READY_FOR_PROCESSING;
     }
+    
     public function isCompleted()
     {
         return $this->status === \Mollie\Api\Types\SessionStatus::STATUS_COMPLETED;
     }
+    
     public function hasFailed()
     {
         return $this->status === \Mollie\Api\Types\SessionStatus::STATUS_FAILED;
     }
+    
     /**
      * Saves the session's updatable properties.
      *
@@ -127,6 +149,7 @@ class Session extends \Mollie\Api\Resources\BaseResource
         $result = $this->client->sessions->update($this->id, $this->withPresetOptions($body));
         return \Mollie\Api\Resources\ResourceFactory::createFromApiResult($result, new \Mollie\Api\Resources\Session($this->client));
     }
+    
     /**
      * Cancels this session.
      *
@@ -137,6 +160,7 @@ class Session extends \Mollie\Api\Resources\BaseResource
     {
         return $this->client->sessions->cancel($this->id, $this->getPresetOptions());
     }
+    
     /**
      * @return string|null
      */

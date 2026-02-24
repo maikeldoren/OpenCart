@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
 use Mollie\Api\MollieApiClient;
 use Mollie\Api\Types\MandateStatus;
+
 class Mandate extends \Mollie\Api\Resources\BaseResource
 {
     /**
@@ -48,6 +51,7 @@ class Mandate extends \Mollie\Api\Resources\BaseResource
      * @var \stdClass
      */
     public $_links;
+    
     /**
      * @return bool
      */
@@ -55,6 +59,7 @@ class Mandate extends \Mollie\Api\Resources\BaseResource
     {
         return $this->status === \Mollie\Api\Types\MandateStatus::STATUS_VALID;
     }
+    
     /**
      * @return bool
      */
@@ -62,6 +67,7 @@ class Mandate extends \Mollie\Api\Resources\BaseResource
     {
         return $this->status === \Mollie\Api\Types\MandateStatus::STATUS_PENDING;
     }
+    
     /**
      * @return bool
      */
@@ -69,6 +75,7 @@ class Mandate extends \Mollie\Api\Resources\BaseResource
     {
         return $this->status === \Mollie\Api\Types\MandateStatus::STATUS_INVALID;
     }
+    
     /**
      * Revoke the mandate
      *

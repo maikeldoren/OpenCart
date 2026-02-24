@@ -1,14 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\Resources\Method;
 use Mollie\Api\Resources\MethodCollection;
 use Mollie\Api\Resources\ResourceFactory;
+
 class MethodEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "methods";
+    
     /**
      * @return Method
      */
@@ -16,6 +20,7 @@ class MethodEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\Method($this->client);
     }
+    
     /**
      * Retrieve all active methods. In test mode, this includes pending methods. The results are not paginated.
      *
@@ -29,6 +34,7 @@ class MethodEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->allActive($parameters);
     }
+    
     /**
      * Retrieve all active methods for the organization. In test mode, this includes pending methods.
      * The results are not paginated.
@@ -42,6 +48,7 @@ class MethodEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return parent::rest_list(null, null, $parameters);
     }
+    
     /**
      * Retrieve all available methods for the organization, including activated and not yet activated methods. The
      * results are not paginated. Make sure to include the profileId parameter if using an OAuth Access Token.
@@ -56,6 +63,7 @@ class MethodEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
         $result = $this->client->performHttpCall('GET', $url);
         return \Mollie\Api\Resources\ResourceFactory::createBaseResourceCollection($this->client, \Mollie\Api\Resources\Method::class, $result->_embedded->methods, $result->_links);
     }
+    
     /**
      * Get the collection object that is used by this API endpoint. Every API endpoint uses one type of collection object.
      *
@@ -68,6 +76,7 @@ class MethodEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\MethodCollection($count, $_links);
     }
+    
     /**
      * Retrieve a payment method from Mollie.
      *

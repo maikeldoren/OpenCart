@@ -1,14 +1,17 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Resources\Chargeback;
 use Mollie\Api\Resources\ChargebackCollection;
 use Mollie\Api\Resources\LazyCollection;
+
 class SettlementChargebackEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "settlements_chargebacks";
+    
     /**
      * @inheritDoc
      */
@@ -16,6 +19,7 @@ class SettlementChargebackEndpoint extends \Mollie\Api\Endpoints\CollectionEndpo
     {
         return new \Mollie\Api\Resources\Chargeback($this->client);
     }
+    
     /**
      * @inheritDoc
      */
@@ -23,6 +27,7 @@ class SettlementChargebackEndpoint extends \Mollie\Api\Endpoints\CollectionEndpo
     {
         return new \Mollie\Api\Resources\ChargebackCollection($this->client, $count, $_links);
     }
+    
     /**
      * Retrieves a collection of Settlement Chargebacks from Mollie.
      *
@@ -34,11 +39,12 @@ class SettlementChargebackEndpoint extends \Mollie\Api\Endpoints\CollectionEndpo
      * @return mixed
      * @throws \Mollie\Api\Exceptions\ApiException
      */
-    public function pageForId(string $settlementId, string $from = null, int $limit = null, array $parameters = [])
+    public function pageForId(string $settlementId, ?string $from = null, ?int $limit = null, array $parameters = [])
     {
         $this->parentId = $settlementId;
         return $this->rest_list($from, $limit, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over chargeback for the given settlement id, retrieved from Mollie.
      *

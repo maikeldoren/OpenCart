@@ -1,14 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Resources\Method;
 use Mollie\Api\Resources\MethodCollection;
 use Mollie\Api\Resources\Profile;
 use Mollie\Api\Resources\ResourceFactory;
+
 class ProfileMethodEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "profiles_methods";
+    
     /**
      * Get the object that is used by this API endpoint. Every API endpoint uses one type of object.
      *
@@ -18,18 +22,20 @@ class ProfileMethodEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbst
     {
         return new \Mollie\Api\Resources\Method($this->client);
     }
+    
     /**
      * Get the collection object that is used by this API endpoint. Every API endpoint uses one type of collection object.
      *
      * @param int $count
      * @param \stdClass $_links
      *
-     * @return MethodCollection()
+     * @return MethodCollection
      */
     protected function getResourceCollectionObject($count, $_links)
     {
         return new \Mollie\Api\Resources\MethodCollection($count, $_links);
     }
+    
     /**
      * Enable a method for the provided Profile ID.
      *
@@ -50,6 +56,7 @@ class ProfileMethodEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbst
         $result = $this->client->performHttpCall(self::REST_CREATE, $resource, $body);
         return \Mollie\Api\Resources\ResourceFactory::createFromApiResult($result, new \Mollie\Api\Resources\Method($this->client));
     }
+    
     /**
      * Enable a method for the provided Profile object.
      *
@@ -63,6 +70,7 @@ class ProfileMethodEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbst
     {
         return $this->createForId($profile->id, $methodId, $data);
     }
+    
     /**
      * Enable a method for the current profile.
      *
@@ -75,6 +83,7 @@ class ProfileMethodEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbst
     {
         return $this->createForId('me', $methodId, $data);
     }
+    
     /**
      * Disable a method for the provided Profile ID.
      *
@@ -89,6 +98,7 @@ class ProfileMethodEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbst
         $this->parentId = $profileId;
         return $this->rest_delete($methodId, $data);
     }
+    
     /**
      * Disable a method for the provided Profile object.
      *
@@ -101,6 +111,7 @@ class ProfileMethodEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbst
     {
         return $this->deleteForId($profile->id, $methodId, $data);
     }
+    
     /**
      * Disable a method for the current profile.
      *

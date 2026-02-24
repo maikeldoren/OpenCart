@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
 class OrderLineCollection extends \Mollie\Api\Resources\BaseCollection
@@ -11,6 +13,7 @@ class OrderLineCollection extends \Mollie\Api\Resources\BaseCollection
     {
         return null;
     }
+    
     /**
      * Get a specific order line.
      * Returns null if the order line cannot be found.
@@ -18,7 +21,7 @@ class OrderLineCollection extends \Mollie\Api\Resources\BaseCollection
      * @param  string $lineId
      * @return OrderLine|null
      */
-    public function get($lineId)
+    public function get(string $lineId)
     {
         foreach ($this as $line) {
             if ($line->id === $lineId) {

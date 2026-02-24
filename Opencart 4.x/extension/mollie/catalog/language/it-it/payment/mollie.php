@@ -59,12 +59,14 @@ $_['text_payment_link_full_title']	    = 'Collegamento di pagamento Mollie - Imp
 $_['text_payment_link_open_title']	    = 'Collegamento di pagamento Mollie - Importo aperto';
 $_['text_cancelled']                    = 'Il pagamento ricorrente è stato annullato';
 $_['text_subscription_cancel_confirm']  = 'Vuoi annullare l\'abbonamento?';
+$_['text_mollie_open_payment'] 			= 'C\'è ancora un pagamento in sospeso di <strong>%s</strong> per questo ordine.';
 
 // Button
 $_['button_retry']  = 'Torna alla pagina di pagamento';
 $_['button_report'] = 'Segnala errore';
 $_['button_submit'] = 'Invia';
 $_['button_subscription_cancel'] = 'Annulla abbonamento';
+$_['button_mollie_pay_now']    = 'Paga ora';
 
 // Entry
 $_['entry_card_holder'] = 'Nome titolare della carta';

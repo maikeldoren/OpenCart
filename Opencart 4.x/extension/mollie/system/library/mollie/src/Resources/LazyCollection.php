@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
 use Iterator;
 use IteratorAggregate;
+
 /**
  * @template TKey of array-key
  * @template TValue
@@ -16,6 +19,7 @@ class LazyCollection implements \IteratorAggregate
      * @var callable
      */
     private $source;
+    
     /**
      * @param callable $source
      */
@@ -23,6 +27,7 @@ class LazyCollection implements \IteratorAggregate
     {
         $this->source = $source;
     }
+    
     /**
      * Get all items in the collection.
      *
@@ -32,6 +37,7 @@ class LazyCollection implements \IteratorAggregate
     {
         return \iterator_to_array($this->getIterator());
     }
+    
     /**
      * Get an item from the collection by key.
      *
@@ -47,6 +53,7 @@ class LazyCollection implements \IteratorAggregate
         }
         return null;
     }
+    
     /**
      * Run a filter over each of the items.
      *
@@ -63,13 +70,14 @@ class LazyCollection implements \IteratorAggregate
             }
         });
     }
+    
     /**
      * Get the first item from the collection passing the given truth test.
      *
      * @param (callable(TValue, TKey): bool)|null  $callback
      * @return TValue|null
      */
-    public function first(callable $callback = null)
+    public function first(?callable $callback = null)
     {
         $iterator = $this->getIterator();
         if (\is_null($callback)) {
@@ -85,6 +93,7 @@ class LazyCollection implements \IteratorAggregate
         }
         return null;
     }
+    
     /**
      * Run a map over each of the items.
      *
@@ -101,6 +110,7 @@ class LazyCollection implements \IteratorAggregate
             }
         });
     }
+    
     /**
      * Take the first {$limit} items.
      *
@@ -122,6 +132,7 @@ class LazyCollection implements \IteratorAggregate
             }
         });
     }
+    
     /**
      * Determine if all items pass the given truth test.
      *
@@ -138,6 +149,7 @@ class LazyCollection implements \IteratorAggregate
         }
         return \true;
     }
+    
     /**
      * Count the number of items in the collection.
      *
@@ -147,6 +159,7 @@ class LazyCollection implements \IteratorAggregate
     {
         return \iterator_count($this->getIterator());
     }
+    
     /**
      * Get an iterator for the items.
      *
@@ -156,6 +169,7 @@ class LazyCollection implements \IteratorAggregate
     {
         return $this->makeIterator($this->source);
     }
+    
     /**
      * Get an iterator for the given value.
      *

@@ -1,18 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\Resources\LazyCollection;
 use Mollie\Api\Resources\PaymentLink;
 use Mollie\Api\Resources\PaymentLinkCollection;
+
 class PaymentLinkEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "payment-links";
+    
     /**
      * @var string
      */
     public const RESOURCE_ID_PREFIX = 'pl_';
+    
     /**
      * Update a Payment Link.
      *
@@ -28,6 +33,7 @@ class PaymentLinkEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstra
         }
         return $this->rest_update($paymentLinkId, $data);
     }
+    
     /**
      * Delete a Payment Link.
      *
@@ -43,6 +49,7 @@ class PaymentLinkEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstra
         }
         $this->rest_delete($paymentLinkId, $data);
     }
+    
     /**
      * @return PaymentLink
      */
@@ -50,6 +57,7 @@ class PaymentLinkEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstra
     {
         return new \Mollie\Api\Resources\PaymentLink($this->client);
     }
+    
     /**
      * Get the collection object that is used by this API endpoint. Every API endpoint uses one type of collection object.
      *
@@ -62,6 +70,7 @@ class PaymentLinkEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstra
     {
         return new \Mollie\Api\Resources\PaymentLinkCollection($this->client, $count, $_links);
     }
+    
     /**
      * Creates a payment link in Mollie.
      *
@@ -75,6 +84,7 @@ class PaymentLinkEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstra
     {
         return $this->rest_create($data, $filters);
     }
+    
     /**
      * Retrieve payment link from Mollie.
      *
@@ -92,20 +102,22 @@ class PaymentLinkEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstra
         }
         return parent::rest_read($paymentLinkId, $parameters);
     }
+    
     /**
      * Retrieves a collection of Payment Links from Mollie.
      *
-     * @param string $from The first payment link ID you want to include in your list.
-     * @param int $limit
+     * @param string|null $from The first payment link ID you want to include in your list.
+     * @param int|null $limit
      * @param array $parameters
      *
      * @return PaymentLinkCollection
      * @throws ApiException
      */
-    public function page($from = null, $limit = null, array $parameters = [])
+    public function page(?string $from = null, ?int $limit = null, array $parameters = [])
     {
         return $this->rest_list($from, $limit, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over payment links retrieved from Mollie.
      *

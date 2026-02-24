@@ -1,6 +1,7 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
 class BalanceTransactionCollection extends \Mollie\Api\Resources\CursorCollection
@@ -12,6 +13,7 @@ class BalanceTransactionCollection extends \Mollie\Api\Resources\CursorCollectio
     {
         return "balance_transactions";
     }
+    
     /**
      * @inheritDoc
      */

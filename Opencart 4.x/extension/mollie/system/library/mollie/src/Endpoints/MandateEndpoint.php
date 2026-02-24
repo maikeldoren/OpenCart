@@ -1,14 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Resources\Customer;
 use Mollie\Api\Resources\LazyCollection;
 use Mollie\Api\Resources\Mandate;
 use Mollie\Api\Resources\MandateCollection;
+
 class MandateEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "customers_mandates";
+    
     /**
      * Get the object that is used by this API endpoint. Every API endpoint uses one type of object.
      *
@@ -18,6 +22,7 @@ class MandateEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\Mandate($this->client);
     }
+    
     /**
      * Get the collection object that is used by this API endpoint. Every API endpoint uses one type of collection object.
      *
@@ -30,6 +35,7 @@ class MandateEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\MandateCollection($this->client, $count, $_links);
     }
+    
     /**
      * @param Customer $customer
      * @param array $options
@@ -42,6 +48,7 @@ class MandateEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->createForId($customer->id, $options, $filters);
     }
+    
     /**
      * @param string $customerId
      * @param array $options
@@ -55,6 +62,7 @@ class MandateEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
         $this->parentId = $customerId;
         return parent::rest_create($options, $filters);
     }
+    
     /**
      * @param Customer $customer
      * @param string $mandateId
@@ -67,6 +75,7 @@ class MandateEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->getForId($customer->id, $mandateId, $parameters);
     }
+    
     /**
      * @param string $customerId
      * @param string $mandateId
@@ -80,19 +89,21 @@ class MandateEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
         $this->parentId = $customerId;
         return parent::rest_read($mandateId, $parameters);
     }
+    
     /**
      * @param Customer $customer
-     * @param string $from The first resource ID you want to include in your list.
-     * @param int $limit
+     * @param string|null $from The first resource ID you want to include in your list.
+     * @param int|null $limit
      * @param array $parameters
      *
      * @return \Mollie\Api\Resources\MandateCollection
      * @throws \Mollie\Api\Exceptions\ApiException
      */
-    public function listFor(\Mollie\Api\Resources\Customer $customer, $from = null, $limit = null, array $parameters = [])
+    public function listFor(\Mollie\Api\Resources\Customer $customer, ?string $from = null, ?int $limit = null, array $parameters = [])
     {
         return $this->listForId($customer->id, $from, $limit, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over mandates for the given customer, retrieved from Mollie.
      *
@@ -108,6 +119,7 @@ class MandateEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->iteratorForId($customer->id, $from, $limit, $parameters, $iterateBackwards);
     }
+    
     /**
      * @param string $customerId
      * @param string|null $from
@@ -117,11 +129,12 @@ class MandateEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
      * @return \Mollie\Api\Resources\MandateCollection
      * @throws \Mollie\Api\Exceptions\ApiException
      */
-    public function listForId($customerId, $from = null, $limit = null, array $parameters = [])
+    public function listForId(string $customerId, ?string $from = null, ?int $limit = null, array $parameters = [])
     {
         $this->parentId = $customerId;
         return parent::rest_list($from, $limit, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over mandates for the given customer id, retrieved from Mollie.
      *
@@ -138,6 +151,7 @@ class MandateEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
         $this->parentId = $customerId;
         return $this->rest_iterator($from, $limit, $parameters, $iterateBackwards);
     }
+    
     /**
      * @param Customer $customer
      * @param string $mandateId
@@ -150,6 +164,7 @@ class MandateEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->revokeForId($customer->id, $mandateId, $data);
     }
+    
     /**
      * @param string $customerId
      * @param string $mandateId

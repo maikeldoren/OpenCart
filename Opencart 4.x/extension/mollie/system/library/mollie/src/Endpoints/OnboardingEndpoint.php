@@ -1,18 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\Resources\BaseResource;
 use Mollie\Api\Resources\Onboarding;
 use Mollie\Api\Resources\ResourceFactory;
+
 class OnboardingEndpoint extends \Mollie\Api\Endpoints\EndpointAbstract
 {
     protected $resourcePath = "onboarding/me";
+    
     protected function getResourceCollectionObject($count, $links)
     {
         throw new \BadMethodCallException('not implemented');
     }
+    
     /**
      * Get the object that is used by this API endpoint. Every API endpoint uses one type of object.
      *
@@ -22,6 +27,7 @@ class OnboardingEndpoint extends \Mollie\Api\Endpoints\EndpointAbstract
     {
         return new \Mollie\Api\Resources\Onboarding($this->client);
     }
+    
     /**
      * Retrieve the organization's onboarding status from Mollie.
      *
@@ -34,6 +40,7 @@ class OnboardingEndpoint extends \Mollie\Api\Endpoints\EndpointAbstract
     {
         return $this->rest_read('', []);
     }
+    
     /**
      * @deprecated 2023-05-01 For an alternative, see https://docs.mollie.com/reference/create-client-link .
      * Submit data that will be prefilled in the merchant’s onboarding.
@@ -48,6 +55,7 @@ class OnboardingEndpoint extends \Mollie\Api\Endpoints\EndpointAbstract
     {
         return $this->rest_create($parameters, []);
     }
+    
     /**
      * @param string $id
      * @param array $filters
@@ -60,6 +68,7 @@ class OnboardingEndpoint extends \Mollie\Api\Endpoints\EndpointAbstract
         $result = $this->client->performHttpCall(self::REST_READ, $this->getResourcePath() . $this->buildQueryString($filters));
         return \Mollie\Api\Resources\ResourceFactory::createFromApiResult($result, $this->getResourceObject());
     }
+    
     /**
      * @param array $body
      * @param array $filters

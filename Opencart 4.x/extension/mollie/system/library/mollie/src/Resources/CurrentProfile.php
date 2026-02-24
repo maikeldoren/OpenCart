@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
 use Mollie\Api\Exceptions\ApiException;
+
 class CurrentProfile extends \Mollie\Api\Resources\Profile
 {
     /**
@@ -13,10 +16,11 @@ class CurrentProfile extends \Mollie\Api\Resources\Profile
      * @return Method
      * @throws ApiException
      */
-    public function enableMethod($methodId, array $data = [])
+    public function enableMethod(string $methodId, array $data = [])
     {
         return $this->client->profileMethods->createForCurrentProfile($methodId, $data);
     }
+    
     /**
      * Disable a payment method for this profile.
      *
@@ -25,7 +29,7 @@ class CurrentProfile extends \Mollie\Api\Resources\Profile
      * @return Method
      * @throws ApiException
      */
-    public function disableMethod($methodId, array $data = [])
+    public function disableMethod(string $methodId, array $data = [])
     {
         return $this->client->profileMethods->deleteForCurrentProfile($methodId, $data);
     }

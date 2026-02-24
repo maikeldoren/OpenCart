@@ -1,14 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\Resources\Client;
 use Mollie\Api\Resources\ClientCollection;
 use Mollie\Api\Resources\LazyCollection;
+
 class ClientEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "clients";
+    
     /**
      * @return Client
      */
@@ -16,6 +20,7 @@ class ClientEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\Client($this->client);
     }
+    
     /**
      * Get the collection object that is used by this API endpoint. Every API endpoint uses one type of collection object.
      *
@@ -28,6 +33,7 @@ class ClientEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\ClientCollection($this->client, $count, $_links);
     }
+    
     /**
      * Retrieve a client from Mollie.
      *
@@ -47,6 +53,7 @@ class ClientEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
         }
         return parent::rest_read($clientId, $parameters);
     }
+    
     /**
      * Retrieves a page of clients from Mollie.
      *
@@ -61,6 +68,7 @@ class ClientEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->rest_list($from, $limit, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over clients retrieved from Mollie.
      *

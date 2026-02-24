@@ -1,18 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\Resources\Order;
 use Mollie\Api\Resources\Shipment;
 use Mollie\Api\Resources\ShipmentCollection;
+
 class ShipmentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "orders_shipments";
+    
     /**
      * @var string
      */
     public const RESOURCE_ID_PREFIX = 'shp_';
+    
     /**
      * Get the object that is used by this API endpoint. Every API endpoint uses one type of object.
      *
@@ -22,6 +27,7 @@ class ShipmentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\Shipment($this->client);
     }
+    
     /**
      * Get the collection object that is used by this API endpoint. Every API
      * endpoint uses one type of collection object.
@@ -35,6 +41,7 @@ class ShipmentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\ShipmentCollection($count, $_links);
     }
+    
     /**
      * Create a shipment for some order lines. You can provide an empty array for the
      * "lines" option to include all unshipped lines for this order.
@@ -50,6 +57,7 @@ class ShipmentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->createForId($order->id, $options, $filters);
     }
+    
     /**
      * Create a shipment for some order lines. You can provide an empty array for the
      * "lines" option to include all unshipped lines for this order.
@@ -66,6 +74,7 @@ class ShipmentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
         $this->parentId = $orderId;
         return parent::rest_create($options, $filters);
     }
+    
     /**
      * Retrieve a single shipment and the order lines shipped by a shipment’s ID.
      *
@@ -80,6 +89,7 @@ class ShipmentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->getForId($order->id, $shipmentId, $parameters);
     }
+    
     /**
      * Retrieve a single shipment and the order lines shipped by a shipment’s ID.
      *
@@ -95,6 +105,7 @@ class ShipmentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
         $this->parentId = $orderId;
         return parent::rest_read($shipmentId, $parameters);
     }
+    
     /**
      * Update a specific Order Shipment resource.
      *
@@ -115,6 +126,7 @@ class ShipmentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
         $this->parentId = $orderId;
         return parent::rest_update($shipmentId, $data);
     }
+    
     /**
      * Return all shipments for the Order provided.
      *
@@ -128,6 +140,7 @@ class ShipmentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->listForId($order->id, $parameters);
     }
+    
     /**
      * Return all shipments for the provided Order id.
      *

@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
 use Mollie\Api\MollieApiClient;
+
 /**
  * @property MollieApiClient $client
  * @property string $mode
@@ -22,6 +25,7 @@ trait HasPresetOptions
         }
         return $options;
     }
+    
     /**
      * Apply the preset options.
      *

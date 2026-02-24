@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
 class InvoiceCollection extends \Mollie\Api\Resources\CursorCollection
@@ -11,6 +13,7 @@ class InvoiceCollection extends \Mollie\Api\Resources\CursorCollection
     {
         return "invoices";
     }
+    
     /**
      * @return BaseResource
      */

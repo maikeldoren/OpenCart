@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Exceptions\ApiException;
@@ -8,13 +10,16 @@ use Mollie\Api\Resources\Payment;
 use Mollie\Api\Resources\PaymentCollection;
 use Mollie\Api\Resources\Refund;
 use Mollie\Api\Resources\ResourceFactory;
+
 class PaymentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "payments";
+    
     /**
      * @var string
      */
     public const RESOURCE_ID_PREFIX = 'tr_';
+    
     /**
      * @return Payment
      */
@@ -22,6 +27,7 @@ class PaymentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\Payment($this->client);
     }
+    
     /**
      * Get the collection object that is used by this API endpoint. Every API endpoint uses one type of collection object.
      *
@@ -34,6 +40,7 @@ class PaymentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\PaymentCollection($this->client, $count, $_links);
     }
+    
     /**
      * Creates a payment in Mollie.
      *
@@ -47,6 +54,7 @@ class PaymentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->rest_create($data, $filters);
     }
+    
     /**
      * Update the given Payment.
      *
@@ -65,6 +73,7 @@ class PaymentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
         }
         return parent::rest_update($paymentId, $data);
     }
+    
     /**
      * Retrieve a single payment from Mollie.
      *
@@ -82,6 +91,7 @@ class PaymentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
         }
         return parent::rest_read($paymentId, $parameters);
     }
+    
     /**
      * Deletes the given Payment.
      *
@@ -98,6 +108,7 @@ class PaymentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->rest_delete($paymentId, $data);
     }
+    
     /**
      * Cancel the given Payment. This is just an alias of the 'delete' method.
      *
@@ -114,20 +125,22 @@ class PaymentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->rest_delete($paymentId, $data);
     }
+    
     /**
      * Retrieves a collection of Payments from Mollie.
      *
-     * @param string $from The first payment ID you want to include in your list.
-     * @param int $limit
+     * @param string|null $from The first payment ID you want to include in your list.
+     * @param int|null $limit
      * @param array $parameters
      *
      * @return PaymentCollection
      * @throws ApiException
      */
-    public function page($from = null, $limit = null, array $parameters = [])
+    public function page(?string $from = null, ?int $limit = null, array $parameters = [])
     {
         return $this->rest_list($from, $limit, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over payments retrieved from Mollie.
      *
@@ -142,6 +155,7 @@ class PaymentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->rest_iterator($from, $limit, $parameters, $iterateBackwards);
     }
+    
     /**
      * Issue a refund for the given payment.
      *

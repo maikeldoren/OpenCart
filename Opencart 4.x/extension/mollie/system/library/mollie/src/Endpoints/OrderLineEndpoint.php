@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Exceptions\ApiException;
@@ -7,13 +9,16 @@ use Mollie\Api\Resources\Order;
 use Mollie\Api\Resources\OrderLine;
 use Mollie\Api\Resources\OrderLineCollection;
 use Mollie\Api\Resources\ResourceFactory;
+
 class OrderLineEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "orders_lines";
+    
     /**
      * @var string
      */
     public const RESOURCE_ID_PREFIX = 'odl_';
+    
     /**
      * Get the object that is used by this API endpoint. Every API endpoint uses one
      * type of object.
@@ -24,6 +29,7 @@ class OrderLineEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\OrderLine($this->client);
     }
+    
     /**
      * Get the collection object that is used by this API endpoint. Every API
      * endpoint uses one type of collection object.
@@ -37,6 +43,7 @@ class OrderLineEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\OrderLineCollection($count, $_links);
     }
+    
     /**
      * Update a specific OrderLine resource.
      *
@@ -58,6 +65,7 @@ class OrderLineEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
         }
         return parent::rest_update($orderlineId, $data);
     }
+    
     /**
      * @param string $orderId
      * @param array $operations
@@ -75,6 +83,7 @@ class OrderLineEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
         $result = $this->client->performHttpCall(self::REST_UPDATE, "{$this->getResourcePath()}", $this->parseRequestBody($parameters));
         return \Mollie\Api\Resources\ResourceFactory::createFromApiResult($result, new \Mollie\Api\Resources\Order($this->client));
     }
+    
     /**
      * Cancel lines for the provided order.
      * The data array must contain a lines array.
@@ -91,6 +100,7 @@ class OrderLineEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->cancelForId($order->id, $data);
     }
+    
     /**
      * Cancel lines for the provided order id.
      * The data array must contain a lines array.

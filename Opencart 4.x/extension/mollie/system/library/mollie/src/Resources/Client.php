@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
 class Client extends \Mollie\Api\Resources\BaseResource
@@ -10,6 +12,7 @@ class Client extends \Mollie\Api\Resources\BaseResource
      * @var string
      */
     public $id;
+    
     /**
      * UTC datetime the order was created in ISO-8601 format.
      *
@@ -17,14 +20,17 @@ class Client extends \Mollie\Api\Resources\BaseResource
      * @var string|null
      */
     public $organizationCreatedAt;
+    
     /**
      * @var \stdClass
      */
     public $_links;
+    
     /**
      * @var \stdClass[]
      */
     public $_embedded;
+    
     /**
      * @var \stdClass|null
      */

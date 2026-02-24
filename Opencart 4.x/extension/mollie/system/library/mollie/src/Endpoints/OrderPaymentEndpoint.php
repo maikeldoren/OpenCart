@@ -1,17 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Resources\Order;
 use Mollie\Api\Resources\Payment;
 use Mollie\Api\Resources\PaymentCollection;
+
 class OrderPaymentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "orders_payments";
+    
     /**
      * @var string
      */
     public const RESOURCE_ID_PREFIX = 'tr_';
+    
     /**
      * Get the object that is used by this API endpoint. Every API endpoint uses one
      * type of object.
@@ -22,6 +27,7 @@ class OrderPaymentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstr
     {
         return new \Mollie\Api\Resources\Payment($this->client);
     }
+    
     /**
      * Get the collection object that is used by this API endpoint. Every API
      * endpoint uses one type of collection object.
@@ -35,6 +41,7 @@ class OrderPaymentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstr
     {
         return new \Mollie\Api\Resources\PaymentCollection($this->client, $count, $_links);
     }
+    
     /**
      * Creates a payment in Mollie for a specific order.
      *
@@ -49,6 +56,7 @@ class OrderPaymentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstr
     {
         return $this->createForId($order->id, $data, $filters);
     }
+    
     /**
      * Creates a payment in Mollie for a specific order ID.
      *

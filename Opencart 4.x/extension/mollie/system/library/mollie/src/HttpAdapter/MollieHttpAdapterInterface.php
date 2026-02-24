@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\HttpAdapter;
 
 interface MollieHttpAdapterInterface
@@ -15,6 +17,7 @@ interface MollieHttpAdapterInterface
      * @throws \Mollie\Api\Exceptions\ApiException
      */
     public function send($httpMethod, $url, $headers, $httpBody);
+    
     /**
      * The version number for the underlying http client, if available.
      * @example Guzzle/6.3

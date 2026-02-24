@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Exceptions\ApiException;
@@ -7,6 +9,7 @@ use Mollie\Api\Resources\BaseCollection;
 use Mollie\Api\Resources\CursorCollection;
 use Mollie\Api\Resources\LazyCollection;
 use Mollie\Api\Resources\ResourceFactory;
+
 abstract class CollectionEndpointAbstract extends \Mollie\Api\Endpoints\EndpointAbstract
 {
     /**
@@ -24,13 +27,17 @@ abstract class CollectionEndpointAbstract extends \Mollie\Api\Endpoints\Endpoint
         $filters = \array_merge(["from" => $from, "limit" => $limit], $filters);
         $apiPath = $this->getResourcePath() . $this->buildQueryString($filters);
         $result = $this->client->performHttpCall(self::REST_LIST, $apiPath);
+        
         /** @var BaseCollection $collection */
         $collection = $this->getResourceCollectionObject($result->count, $result->_links);
+        
         foreach ($result->_embedded->{$collection->getCollectionResourceName()} as $dataResult) {
             $collection[] = \Mollie\Api\Resources\ResourceFactory::createFromApiResult($dataResult, $this->getResourceObject());
         }
+        
         return $collection;
     }
+    
     /**
      * Create a generator for iterating over a resource's collection using REST API calls.
      *
@@ -50,6 +57,7 @@ abstract class CollectionEndpointAbstract extends \Mollie\Api\Endpoints\Endpoint
         $page = $this->rest_list($from, $limit, $filters);
         return $page->getAutoIterator($iterateBackwards);
     }
+    
     /**
      * Get the collection object that is used by this API endpoint. Every API endpoint uses one type of collection object.
      *

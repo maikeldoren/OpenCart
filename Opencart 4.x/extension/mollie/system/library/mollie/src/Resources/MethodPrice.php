@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
 class MethodPrice extends \Mollie\Api\Resources\BaseResource
@@ -11,12 +13,14 @@ class MethodPrice extends \Mollie\Api\Resources\BaseResource
      * @var string
      */
     public $description;
+    
     /**
      * The fixed price per transaction. This excludes the variable amount.
      *
      * @var \stdClass An amount object consisting of `value` and `currency`
      */
     public $fixed;
+    
     /**
      * A string containing the percentage being charged over the payment amount besides the fixed price.
      *

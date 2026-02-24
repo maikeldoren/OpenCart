@@ -1,14 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Resources\Customer;
 use Mollie\Api\Resources\LazyCollection;
 use Mollie\Api\Resources\Payment;
 use Mollie\Api\Resources\PaymentCollection;
+
 class CustomerPaymentsEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "customers_payments";
+    
     /**
      * Get the object that is used by this API endpoint. Every API endpoint uses one type of object.
      *
@@ -18,6 +22,7 @@ class CustomerPaymentsEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointA
     {
         return new \Mollie\Api\Resources\Payment($this->client);
     }
+    
     /**
      * Get the collection object that is used by this API endpoint. Every API endpoint uses one type of collection object.
      *
@@ -30,6 +35,7 @@ class CustomerPaymentsEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointA
     {
         return new \Mollie\Api\Resources\PaymentCollection($this->client, $count, $_links);
     }
+    
     /**
      * Create a subscription for a Customer
      *
@@ -44,6 +50,7 @@ class CustomerPaymentsEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointA
     {
         return $this->createForId($customer->id, $options, $filters);
     }
+    
     /**
      * Create a subscription for a Customer ID
      *
@@ -59,6 +66,7 @@ class CustomerPaymentsEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointA
         $this->parentId = $customerId;
         return parent::rest_create($options, $filters);
     }
+    
     /**
      * @param Customer $customer
      * @param string $from The first resource ID you want to include in your list.
@@ -72,6 +80,7 @@ class CustomerPaymentsEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointA
     {
         return $this->listForId($customer->id, $from, $limit, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over payments for the given customer, retrieved from Mollie.
      *
@@ -87,6 +96,7 @@ class CustomerPaymentsEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointA
     {
         return $this->iteratorForId($customer->id, $from, $limit, $parameters, $iterateBackwards);
     }
+    
     /**
      * @param string $customerId
      * @param string $from The first resource ID you want to include in your list.
@@ -101,6 +111,7 @@ class CustomerPaymentsEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointA
         $this->parentId = $customerId;
         return parent::rest_list($from, $limit, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over payments for the given customer id, retrieved from Mollie.
      *

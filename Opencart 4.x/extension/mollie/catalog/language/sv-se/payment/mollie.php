@@ -59,12 +59,14 @@ $_['text_payment_link_full_title']	    = 'Mollie betalningslänk - Hela beloppet
 $_['text_payment_link_open_title']	    = 'Mollie betalningslänk - Öppet belopp';
 $_['text_cancelled']                    = 'Återkommande betalning har avbrutits';
 $_['text_subscription_cancel_confirm']  = 'Vill du säga upp prenumerationen?';
+$_['text_mollie_open_payment'] 			= 'Det finns fortfarande en öppen betalning på <strong>%s</strong> för denna beställning.';
 
 // Button
 $_['button_retry']  = 'Återgå till kassasidan';
 $_['button_report'] = 'Rapportera fel';
 $_['button_submit'] = 'Skicka';
 $_['button_subscription_cancel'] = 'Avsluta prenumeration';
+$_['button_mollie_pay_now']    = 'Betala nu';
 
 // Entry
 $_['entry_card_holder']         = 'Kortinnehavarens namn';

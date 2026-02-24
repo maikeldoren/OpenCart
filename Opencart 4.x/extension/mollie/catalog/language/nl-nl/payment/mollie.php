@@ -59,12 +59,14 @@ $_['text_payment_link_full_title']	    = 'Mollie Betaallink - Volledige bedrag';
 $_['text_payment_link_open_title']	    = 'Mollie Betaallink - Open hoeveelheid';
 $_['text_cancelled']                    = 'Terugkerende betaling is geannuleerd';
 $_['text_subscription_cancel_confirm']  = 'Wilt u het abonnement opzeggen?';
+$_['text_mollie_open_payment'] 	= 'Er staat nog een betaling open van <strong>%s</strong> voor deze bestelling.';
 
 // Button
 $_['button_retry']          = 'Opnieuw proberen af te rekenen';
 $_['button_report']         = 'Report Error';
 $_['button_submit']         = 'Verzenden';
 $_['button_subscription_cancel'] = 'Abonnement opzeggen';
+$_['button_mollie_pay_now'] = 'Betaal nu';
 
 // Entry
 $_['entry_card_holder']     	= 'Kaarthouder naam';

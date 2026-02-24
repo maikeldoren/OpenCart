@@ -4,45 +4,46 @@ use Mollie\Api\MollieApiClient;
 
 class MollieHelper {
 
-	const PLUGIN_VERSION = "13.4.2";
-
+	const PLUGIN_VERSION = "13.5.0";
 	const OUTH_URL = 'https://api.mollie.com/oauth2';
 
 	const MIN_PHP_VERSION = "8.0.0";
 	const NEXT_PHP_VERSION = "8.0.0"; // Maybe used in future
 
 	// All available modules. These should correspond to the Mollie_API_Object_Method constants.
-	const MODULE_NAME_BANKTRANSFER  	= "banktransfer";
-	const MODULE_NAME_BELFIUS       	= "belfius";
-	const MODULE_NAME_CREDITCARD    	= "creditcard";
-	const MODULE_NAME_IDEAL         	= "ideal";
-	const MODULE_NAME_BANCONTACT    	= "bancontact";
-	const MODULE_NAME_PAYPAL        	= "paypal";
-	const MODULE_NAME_KBC           	= "kbc";
-	const MODULE_NAME_GIFTCARD      	= "giftcard";
-	const MODULE_NAME_EPS           	= "eps";
-	const MODULE_NAME_KLARNAPAYLATER 	= "klarnapaylater";
-	const MODULE_NAME_KLARNAPAYNOW   	= "klarnapaynow";
-	const MODULE_NAME_KLARNASLICEIT  	= "klarnasliceit";
-	const MODULE_NAME_PRZELEWY24  	 	= "przelewy_24";
-	const MODULE_NAME_APPLEPAY  	 	= "applepay";
-	const MODULE_NAME_VOUCHER    	 	= "voucher";
-	const MODULE_NAME_IN3    	 		= "in_3";
-	const MODULE_NAME_MYBANK    	 	= "mybank";
-	const MODULE_NAME_BILLIE    	 	= "billie";
-	const MODULE_NAME_KLARNA    	 	= "klarna";
-	const MODULE_NAME_TWINT    	 	    = "twint";
-	const MODULE_NAME_BLIK    	 	    = "blik";
-	const MODULE_NAME_BANCOMATPAY    	= "bancomatpay";
-	const MODULE_NAME_TRUSTLY	    	= "trustly";
-	const MODULE_NAME_ALMA	 	    	= "alma";
-	const MODULE_NAME_RIVERTY	 	    = "riverty";
-	const MODULE_NAME_PAYCONIQ	 	    = "payconiq";
-	const MODULE_NAME_SATISPAY	 	    = "satispay";
+	const MODULE_NAME_BANKTRANSFER   = "banktransfer";
+	const MODULE_NAME_BELFIUS        = "belfius";
+	const MODULE_NAME_CREDITCARD     = "creditcard";
+	const MODULE_NAME_IDEAL          = "ideal";
+	const MODULE_NAME_BANCONTACT     = "bancontact";
+	const MODULE_NAME_PAYPAL         = "paypal";
+	const MODULE_NAME_KBC            = "kbc";
+	const MODULE_NAME_GIFTCARD       = "giftcard";
+	const MODULE_NAME_EPS            = "eps";
+	const MODULE_NAME_KLARNAPAYLATER = "klarnapaylater";
+	const MODULE_NAME_KLARNAPAYNOW   = "klarnapaynow";
+	const MODULE_NAME_KLARNASLICEIT  = "klarnasliceit";
+	const MODULE_NAME_PRZELEWY24     = "przelewy_24";
+	const MODULE_NAME_APPLEPAY       = "applepay";
+	const MODULE_NAME_VOUCHER        = "voucher";
+	const MODULE_NAME_IN3            = "in_3";
+	const MODULE_NAME_MYBANK         = "mybank";
+	const MODULE_NAME_BILLIE         = "billie";
+	const MODULE_NAME_KLARNA         = "klarna";
+	const MODULE_NAME_TWINT          = "twint";
+	const MODULE_NAME_BLIK           = "blik";
+	const MODULE_NAME_BANCOMATPAY    = "bancomatpay";
+	const MODULE_NAME_TRUSTLY        = "trustly";
+	const MODULE_NAME_ALMA           = "alma";
+	const MODULE_NAME_RIVERTY        = "riverty";
+	const MODULE_NAME_PAYCONIQ       = "payconiq";
+	const MODULE_NAME_SATISPAY       = "satispay";
 
-
-	// List of all available module names.
-	public $MODULE_NAMES = array(
+	/**
+	 * List of all available module names.
+	 * @var array
+	 */
+	public array $MODULE_NAMES = [
 		self::MODULE_NAME_BANKTRANSFER,
 		self::MODULE_NAME_BELFIUS,
 		self::MODULE_NAME_CREDITCARD,
@@ -70,34 +71,35 @@ class MollieHelper {
 		self::MODULE_NAME_RIVERTY,
 		self::MODULE_NAME_PAYCONIQ,
 		self::MODULE_NAME_SATISPAY
-	);
+	];
 
-	protected $api_client;
-    private $db;
+	protected ?object $api_client = null;
+	private object $db;
 
-	public function __construct($registry) {
+	/**
+	 * Constructor
+	 * * @param object $registry
+	 */
+	public function __construct(object $registry) {
 		$this->db = $registry->get('db');
 	}
 
 	/**
-	 * @return bool
+	 * Check if the Mollie API Client directory exists
+	 * * @return bool
 	 */
-	public function apiClientFound ()
-	{
+	public function apiClientFound(): bool {
 		return file_exists(DIR_EXTENSION . "mollie/system/library/mollie/");
 	}
 
 	/**
 	 * Get the Mollie client. Needs the Config object to retrieve the API key.
 	 *
-	 * @param Config $config
-	 *
+	 * @param object $data
 	 * @return MollieApiClient
 	 */
-	public function getAPIClient ($data)
-	{
-		if (!$this->api_client && $this->apiClientFound())
-		{
+	public function getAPIClient(object $data): MollieApiClient {
+		if (!$this->api_client && $this->apiClientFound()) {
 			require_once(DIR_EXTENSION . "mollie/system/library/mollie/vendor/autoload.php");
 			$mollie = new MollieApiClient;
 
@@ -116,15 +118,13 @@ class MollieHelper {
 	 * Get the Mollie client. Needs the Config array for multishop to retrieve the API key.
 	 *
 	 * @param array $config
-	 *
 	 * @return MollieApiClient
 	 */
-	public function getAPIClientAdmin ($config)
-	{
+	public function getAPIClientAdmin(array $config): MollieApiClient {
 		require_once(DIR_EXTENSION . "mollie/system/library/mollie/vendor/autoload.php");
 		$mollie = new MollieApiClient;
 
-		$mollie->setApiKey(isset($config[$this->getModuleCode() . '_api_key']) ? $config[$this->getModuleCode() . '_api_key'] : null);
+		$mollie->setApiKey($config[$this->getModuleCode() . '_api_key'] ?? null);
 
 		$mollie->addVersionString("OpenCart/" . VERSION);
 		$mollie->addVersionString("MollieOpenCart/" . self::PLUGIN_VERSION);
@@ -132,8 +132,12 @@ class MollieHelper {
 		return $mollie;
 	}
 
-	public function getAPIClientForKey($key = null)
-	{
+	/**
+	 * Get the Mollie API Client using a specific key
+	 * * @param string|null $key
+	 * @return MollieApiClient
+	 */
+	public function getAPIClientForKey(?string $key = null): MollieApiClient {
 		require_once(DIR_EXTENSION . "mollie/system/library/mollie/vendor/autoload.php");
 		$mollie = new MollieApiClient;
 
@@ -145,7 +149,12 @@ class MollieHelper {
 		return $mollie;
 	}
 
-	public function getAPIClientForAccessToken($accessToken) {
+	/**
+	 * Get the Mollie API Client using an access token
+	 * * @param string|null $accessToken
+	 * @return MollieApiClient
+	 */
+	public function getAPIClientForAccessToken(?string $accessToken): MollieApiClient {
 		require_once(DIR_EXTENSION . "mollie/system/library/mollie/vendor/autoload.php");
 		$mollie = new MollieApiClient;
 
@@ -157,56 +166,71 @@ class MollieHelper {
 		return $mollie;
 	}
 
-	public function getApiKey($store) {
-        return $this->getSettingValue($this->getModuleCode() . "_api_key", $store);
+	/**
+	 * Get API key for a specific store
+	 * * @param int|string $store
+	 * @return string|null
+	 */
+	public function getApiKey(int|string $store): ?string {
+        return $this->getSettingValue($this->getModuleCode() . "_api_key", (int)$store);
     }
 
 	/**
-	 * @return string
+	 * Get the module code
+	 * * @return string
 	 */
-	public function getModuleCode()
-	{
+	public function getModuleCode(): string {
 		return 'payment_mollie';
 	}
 
-	public function getSettingValue($key, $store_id = 0) {
-		$result = $this->db->query("SELECT value FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `key` = '" . $key . "'");
+	/**
+	 * Retrieve a specific setting value from the database securely
+	 * * @param string $key
+	 * @param int $store_id
+	 * @return string|null
+	 */
+	public function getSettingValue(string $key, int $store_id = 0): ?string {
+		// Properly escaped $key to prevent SQL Injection
+		$result = $this->db->query("SELECT `value` FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "' AND `key` = '" . $this->db->escape($key) . "'");
 
-		if (isset($result->row['value'])) {
-			return $result->row['value'];
-		} else {
-			return null;	
-		}
+		return $result->row['value'] ?? null;
 	}
 
-	public function curlRequest($resource, $data) {
-        // clean up the url
+	/**
+	 * Execute a CURL request to Mollie's OAuth endpoint
+	 * * @param string $resource
+	 * @param mixed $data
+	 * @return mixed
+	 * @throws \RuntimeException
+	 */
+	public function curlRequest(string $resource, mixed $data): mixed {
+        // Clean up the url
         $url = rtrim(self::OUTH_URL, '/ ');
 
-        if ( !function_exists('curl_init') ) die('CURL not supported. (introduced in PHP 4.0.2)');
+        if (!function_exists('curl_init')) {
+			throw new \RuntimeException('Mollie Helper Error: CURL extension is not loaded in PHP.');
+		}
 
-        // define a final API request
+        // Define a final API request
         $api = $url . '/' . $resource;
 
         $ch = curl_init();
 
 		curl_setopt($ch, CURLOPT_URL, $api);
-		curl_setopt($ch, CURLOPT_POST, TRUE);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 		$response = curl_exec($ch);
+		$error = curl_error($ch);
 
-		curl_close ($ch);
+		curl_close($ch);
 
-        if ( !$response ) {
-            die('Nothing was returned.');
+        if (!$response) {
+            throw new \RuntimeException('Mollie Helper Error: Nothing was returned from CURL request. Error: ' . $error);
         }
 
-        // This line takes the response and breaks it into an array using:
-        // JSON decoder
-        $result = json_decode($response);
-
-        return $result;
+        // This line takes the response and breaks it into an array using JSON decoder
+        return json_decode($response);
     }
 }

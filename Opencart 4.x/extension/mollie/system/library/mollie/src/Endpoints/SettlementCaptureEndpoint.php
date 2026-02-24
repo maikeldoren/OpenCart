@@ -1,14 +1,17 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Resources\Capture;
 use Mollie\Api\Resources\CaptureCollection;
 use Mollie\Api\Resources\LazyCollection;
+
 class SettlementCaptureEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "settlements_captures";
+    
     /**
      * @inheritDoc
      */
@@ -16,10 +19,12 @@ class SettlementCaptureEndpoint extends \Mollie\Api\Endpoints\CollectionEndpoint
     {
         return new \Mollie\Api\Resources\Capture($this->client);
     }
+    
     protected function getResourceCollectionObject($count, $_links)
     {
         return new \Mollie\Api\Resources\CaptureCollection($this->client, $count, $_links);
     }
+    
     /**
      * Retrieves a collection of Settlement Captures from Mollie.
      *
@@ -31,11 +36,12 @@ class SettlementCaptureEndpoint extends \Mollie\Api\Endpoints\CollectionEndpoint
      * @return mixed
      * @throws \Mollie\Api\Exceptions\ApiException
      */
-    public function pageForId(string $settlementId, string $from = null, int $limit = null, array $parameters = [])
+    public function pageForId(string $settlementId, ?string $from = null, ?int $limit = null, array $parameters = [])
     {
         $this->parentId = $settlementId;
         return $this->rest_list($from, $limit, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over captures for the given settlement id, retrieved from Mollie.
      *

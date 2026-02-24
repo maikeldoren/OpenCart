@@ -1,13 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Resources\LazyCollection;
 use Mollie\Api\Resources\Payment;
 use Mollie\Api\Resources\PaymentCollection;
+
 class SettlementPaymentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "settlements_payments";
+    
     /**
      * @inheritDoc
      */
@@ -15,6 +19,7 @@ class SettlementPaymentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpoint
     {
         return new \Mollie\Api\Resources\Payment($this->client);
     }
+    
     /**
      * @inheritDoc
      */
@@ -22,6 +27,7 @@ class SettlementPaymentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpoint
     {
         return new \Mollie\Api\Resources\PaymentCollection($this->client, $count, $_links);
     }
+    
     /**
      * Retrieves a collection of Payments from Mollie.
      *
@@ -33,11 +39,12 @@ class SettlementPaymentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpoint
      * @return mixed
      * @throws \Mollie\Api\Exceptions\ApiException
      */
-    public function pageForId($settlementId, $from = null, $limit = null, array $parameters = [])
+    public function pageForId(string $settlementId, ?string $from = null, ?int $limit = null, array $parameters = [])
     {
         $this->parentId = $settlementId;
         return $this->rest_list($from, $limit, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over payments for the given settlement id, retrieved from Mollie.
      *

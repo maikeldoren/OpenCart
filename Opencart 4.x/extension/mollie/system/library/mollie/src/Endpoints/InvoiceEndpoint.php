@@ -1,14 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\Resources\Invoice;
 use Mollie\Api\Resources\InvoiceCollection;
 use Mollie\Api\Resources\LazyCollection;
+
 class InvoiceEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "invoices";
+    
     /**
      * Get the object that is used by this API. Every API uses one type of object.
      *
@@ -18,6 +22,7 @@ class InvoiceEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\Invoice($this->client);
     }
+    
     /**
      * Get the collection object that is used by this API. Every API uses one type of collection object.
      *
@@ -30,6 +35,7 @@ class InvoiceEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\InvoiceCollection($this->client, $count, $_links);
     }
+    
     /**
      * Retrieve an Invoice from Mollie.
      *
@@ -45,20 +51,22 @@ class InvoiceEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->rest_read($invoiceId, $parameters);
     }
+    
     /**
      * Retrieves a collection of Invoices from Mollie.
      *
-     * @param string $from The first invoice ID you want to include in your list.
-     * @param int $limit
+     * @param string|null $from The first invoice ID you want to include in your list.
+     * @param int|null $limit
      * @param array $parameters
      *
      * @return InvoiceCollection
      * @throws ApiException
      */
-    public function page($from = null, $limit = null, array $parameters = [])
+    public function page(?string $from = null, ?int $limit = null, array $parameters = [])
     {
         return $this->rest_list($from, $limit, $parameters);
     }
+    
     /**
      * This is a wrapper method for page
      *
@@ -71,6 +79,7 @@ class InvoiceEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->page(null, null, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over invoices retrieved from Mollie.
      *

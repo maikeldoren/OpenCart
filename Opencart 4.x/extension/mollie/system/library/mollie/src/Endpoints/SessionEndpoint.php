@@ -1,18 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\Resources\LazyCollection;
 use Mollie\Api\Resources\Session;
 use Mollie\Api\Resources\SessionCollection;
+
 class SessionEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "sessions";
+    
     /**
      * @var string
      */
     public const RESOURCE_ID_PREFIX = 'sess_';
+    
     /**
      * Get the object that is used by this API endpoint. Every API endpoint uses one
      * type of object.
@@ -23,6 +28,7 @@ class SessionEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\Session($this->client);
     }
+    
     /**
      * Get the collection object that is used by this API endpoint. Every API
      * endpoint uses one type of collection object.
@@ -36,6 +42,7 @@ class SessionEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\SessionCollection($this->client, $count, $_links);
     }
+    
     /**
      * Creates a session in Mollie.
      *
@@ -49,6 +56,7 @@ class SessionEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->rest_create($data, $filters);
     }
+    
     /**
      * Update a specific Session resource
      *
@@ -67,6 +75,7 @@ class SessionEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
         }
         return parent::rest_update($resourceId, $data);
     }
+    
     /**
      * Retrieve a single session from Mollie.
      *
@@ -84,6 +93,7 @@ class SessionEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
         }
         return parent::rest_read($resourceId, $parameters);
     }
+    
     /**
      * Cancel the given Session.
      *
@@ -96,11 +106,12 @@ class SessionEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->rest_delete($resourceId, $parameters);
     }
+    
     /**
      * Retrieves a collection of Sessions from Mollie.
      *
-     * @param string $from The first resource ID you want to include in your list.
-     * @param int $limit
+     * @param string|null $from The first resource ID you want to include in your list.
+     * @param int|null $limit
      * @param array $parameters
      *
      * @return SessionCollection
@@ -110,6 +121,7 @@ class SessionEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return $this->rest_list($from, $limit, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over sessions retrieved from Mollie.
      *

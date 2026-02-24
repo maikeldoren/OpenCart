@@ -1,38 +1,47 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\MollieApiClient;
 use Mollie\Api\Types\ProfileStatus;
+
 class Profile extends \Mollie\Api\Resources\BaseResource
 {
     /**
      * @var string
      */
     public $id;
+    
     /**
      * Test or live mode
      *
      * @var string
      */
     public $mode;
+    
     /**
      * @var string
      */
     public $name;
+    
     /**
      * @var string
      */
     public $website;
+    
     /**
      * @var string
      */
     public $email;
+    
     /**
      * @var string
      */
     public $phone;
+    
     /**
      * See https://docs.mollie.com/reference/v2/profiles-api/get-profile
      * This parameter is deprecated and will be removed in 2022. Please use the businessCategory parameter instead.
@@ -41,20 +50,24 @@ class Profile extends \Mollie\Api\Resources\BaseResource
      * @var int|null
      */
     public $categoryCode;
+    
     /**
      * See https://docs.mollie.com/reference/v2/profiles-api/get-profile
      *
      * @var string|null
      */
     public $businessCategory;
+    
     /**
      * @var string
      */
     public $status;
+    
     /**
      * @var \stdClass
      */
     public $review;
+    
     /**
      * UTC datetime the profile was created in ISO-8601 format.
      *
@@ -62,10 +75,12 @@ class Profile extends \Mollie\Api\Resources\BaseResource
      * @var string
      */
     public $createdAt;
+    
     /**
      * @var \stdClass
      */
     public $_links;
+    
     /**
      * @return bool
      */
@@ -73,6 +88,7 @@ class Profile extends \Mollie\Api\Resources\BaseResource
     {
         return $this->status == \Mollie\Api\Types\ProfileStatus::STATUS_UNVERIFIED;
     }
+    
     /**
      * @return bool
      */
@@ -80,6 +96,7 @@ class Profile extends \Mollie\Api\Resources\BaseResource
     {
         return $this->status == \Mollie\Api\Types\ProfileStatus::STATUS_VERIFIED;
     }
+    
     /**
      * @return bool
      */
@@ -87,6 +104,7 @@ class Profile extends \Mollie\Api\Resources\BaseResource
     {
         return $this->status == \Mollie\Api\Types\ProfileStatus::STATUS_BLOCKED;
     }
+    
     /**
      * @return \Mollie\Api\Resources\Profile
      * @throws ApiException
@@ -97,6 +115,7 @@ class Profile extends \Mollie\Api\Resources\BaseResource
         $result = $this->client->profiles->update($this->id, $body);
         return \Mollie\Api\Resources\ResourceFactory::createFromApiResult($result, new \Mollie\Api\Resources\Profile($this->client));
     }
+    
     /**
      * Retrieves all chargebacks associated with this profile
      *
@@ -111,6 +130,7 @@ class Profile extends \Mollie\Api\Resources\BaseResource
         $result = $this->client->performHttpCallToFullUrl(\Mollie\Api\MollieApiClient::HTTP_GET, $this->_links->chargebacks->href);
         return \Mollie\Api\Resources\ResourceFactory::createCursorResourceCollection($this->client, $result->_embedded->chargebacks, \Mollie\Api\Resources\Chargeback::class, $result->_links);
     }
+    
     /**
      * Retrieves all methods activated on this profile
      *
@@ -125,6 +145,7 @@ class Profile extends \Mollie\Api\Resources\BaseResource
         $result = $this->client->performHttpCallToFullUrl(\Mollie\Api\MollieApiClient::HTTP_GET, $this->_links->methods->href);
         return \Mollie\Api\Resources\ResourceFactory::createCursorResourceCollection($this->client, $result->_embedded->methods, \Mollie\Api\Resources\Method::class, $result->_links);
     }
+    
     /**
      * Enable a payment method for this profile.
      *
@@ -133,10 +154,11 @@ class Profile extends \Mollie\Api\Resources\BaseResource
      * @return Method
      * @throws ApiException
      */
-    public function enableMethod($methodId, array $data = [])
+    public function enableMethod(string $methodId, array $data = [])
     {
         return $this->client->profileMethods->createFor($this, $methodId, $data);
     }
+    
     /**
      * Disable a payment method for this profile.
      *
@@ -145,10 +167,11 @@ class Profile extends \Mollie\Api\Resources\BaseResource
      * @return Method
      * @throws ApiException
      */
-    public function disableMethod($methodId, array $data = [])
+    public function disableMethod(string $methodId, array $data = [])
     {
         return $this->client->profileMethods->deleteFor($this, $methodId, $data);
     }
+    
     /**
      * Retrieves all payments associated with this profile
      *
@@ -163,6 +186,7 @@ class Profile extends \Mollie\Api\Resources\BaseResource
         $result = $this->client->performHttpCallToFullUrl(\Mollie\Api\MollieApiClient::HTTP_GET, $this->_links->payments->href);
         return \Mollie\Api\Resources\ResourceFactory::createCursorResourceCollection($this->client, $result->_embedded->methods, \Mollie\Api\Resources\Method::class, $result->_links);
     }
+    
     /**
      * Retrieves all refunds associated with this profile
      *

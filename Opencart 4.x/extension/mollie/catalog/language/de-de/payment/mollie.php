@@ -59,12 +59,14 @@ $_['text_payment_link_full_title']	    = 'Mollie-Zahlungslink - Gesamtbetrag';
 $_['text_payment_link_open_title']	    = 'Mollie-Zahlungslink - Offener Betrag';
 $_['text_cancelled']                    = 'Die Dauerzahlung wurde storniert';
 $_['text_subscription_cancel_confirm']  = 'Möchten Sie das Abonnement kündigen?';
+$_['text_mollie_open_payment'] = 'Es steht noch eine offene Zahlung von <strong>%s</strong> für diese Bestellung aus.';
 
 // Button
 $_['button_retry']          = 'Erneut versuchen, abzurechnen';
 $_['button_report']         = 'Report Error';
 $_['button_submit']         = 'Einreichen';
 $_['button_subscription_cancel'] = 'Abonnement kündigen';
+$_['button_mollie_pay_now']    = 'Jetzt bezahlen';
 
 // Entry
 $_['entry_card_holder']     	= 'Card Holder Name';

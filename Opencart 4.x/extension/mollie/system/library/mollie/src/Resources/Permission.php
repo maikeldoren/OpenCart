@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
 class Permission extends \Mollie\Api\Resources\BaseResource
@@ -9,14 +11,17 @@ class Permission extends \Mollie\Api\Resources\BaseResource
      * @example payments.read
      */
     public $id;
+    
     /**
      * @var string
      */
     public $description;
+    
     /**
      * @var bool
      */
     public $granted;
+    
     /**
      * @var \stdClass
      */

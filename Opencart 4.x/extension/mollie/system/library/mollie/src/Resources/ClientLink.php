@@ -1,14 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
 use Mollie\Api\Types\ApprovalPrompt;
+
 class ClientLink extends \Mollie\Api\Resources\BaseResource
 {
     /**
      * @var string
      */
     public $resource;
+    
     /**
      * Id of the client link.
      *
@@ -16,12 +20,14 @@ class ClientLink extends \Mollie\Api\Resources\BaseResource
      * @var string
      */
     public $id;
+    
     /**
      * An object with several URL objects relevant to the client link. Every URL object will contain an href and a type field.
      *
      * @var \stdClass
      */
     public $_links;
+    
     /**
      * Get the redirect URL where the customer can complete the payment.
      *

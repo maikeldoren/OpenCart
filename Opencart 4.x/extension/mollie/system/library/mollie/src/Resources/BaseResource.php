@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
 use Mollie\Api\MollieApiClient;
+
 #[\AllowDynamicProperties]
 abstract class BaseResource
 {
@@ -10,6 +13,7 @@ abstract class BaseResource
      * @var MollieApiClient
      */
     protected $client;
+    
     /**
      * Indicates the type of resource.
      *
@@ -18,6 +22,7 @@ abstract class BaseResource
      * @var string
      */
     public $resource;
+    
     /**
      * @param MollieApiClient $client
      */

@@ -1,13 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\Resources\Organization;
 use Mollie\Api\Resources\OrganizationCollection;
+
 class OrganizationEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "organizations";
+    
     /**
      * @return Organization
      */
@@ -15,6 +19,7 @@ class OrganizationEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstr
     {
         return new \Mollie\Api\Resources\Organization($this->client);
     }
+    
     /**
      * Get the collection object that is used by this API endpoint. Every API endpoint uses one type of collection object.
      *
@@ -27,6 +32,7 @@ class OrganizationEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstr
     {
         return new \Mollie\Api\Resources\OrganizationCollection($this->client, $count, $_links);
     }
+    
     /**
      * Retrieve an organization from Mollie.
      *
@@ -44,6 +50,7 @@ class OrganizationEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstr
         }
         return parent::rest_read($organizationId, $parameters);
     }
+    
     /**
      * Retrieve the current organization from Mollie.
      *

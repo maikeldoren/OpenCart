@@ -1,14 +1,17 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Resources\LazyCollection;
 use Mollie\Api\Resources\Refund;
 use Mollie\Api\Resources\RefundCollection;
+
 class SettlementRefundEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "settlements_refunds";
+    
     /**
      * @inheritDoc
      */
@@ -16,6 +19,7 @@ class SettlementRefundEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointA
     {
         return new \Mollie\Api\Resources\RefundCollection($this->client, $count, $_links);
     }
+    
     /**
      * @inheritDoc
      */
@@ -23,6 +27,7 @@ class SettlementRefundEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointA
     {
         return new \Mollie\Api\Resources\Refund($this->client);
     }
+    
     /**
      * Retrieves a collection of Settlement Refunds from Mollie.
      *
@@ -34,11 +39,12 @@ class SettlementRefundEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointA
      * @return mixed
      * @throws \Mollie\Api\Exceptions\ApiException
      */
-    public function pageForId(string $settlementId, string $from = null, int $limit = null, array $parameters = [])
+    public function pageForId(string $settlementId, ?string $from = null, ?int $limit = null, array $parameters = [])
     {
         $this->parentId = $settlementId;
         return $this->rest_list($from, $limit, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over refunds for the given settlement id, retrieved from Mollie.
      *

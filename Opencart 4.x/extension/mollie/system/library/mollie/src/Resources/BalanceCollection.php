@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
 class BalanceCollection extends \Mollie\Api\Resources\CursorCollection
@@ -11,6 +13,7 @@ class BalanceCollection extends \Mollie\Api\Resources\CursorCollection
     {
         return "balances";
     }
+    
     /**
      * @return BaseResource
      */

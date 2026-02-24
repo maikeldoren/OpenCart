@@ -59,12 +59,14 @@ $_['text_payment_link_full_title']	= 'Mollie Payment Link - Full Amount';
 $_['text_payment_link_open_title']	= 'Mollie Payment Link - Open Amount';
 $_['text_cancelled']                = 'Subscription has been cancelled';
 $_['text_subscription_cancel_confirm']  = 'Do you want to cancel the subscription?';
+$_['text_mollie_open_payment'] = 'There is still an open payment of <strong>%s</strong> for this order.';
 
 // Button
 $_['button_retry']          = 'Return to checkout page';
 $_['button_report']         = 'Report Error';
 $_['button_submit']         = 'Submit';
 $_['button_subscription_cancel'] = 'Cancel Subscription';
+$_['button_mollie_pay_now'] = 'Pay now';
 
 // Entry
 $_['entry_card_holder']     	= 'Card Holder Name';

@@ -59,12 +59,14 @@ $_['text_payment_link_full_title']	    = 'Mollie betalingslink - Fuldt beløb';
 $_['text_payment_link_open_title']	    = 'Mollie betalingslink - Åbent beløb';
 $_['text_cancelled']                    = 'Tilbagevendende betaling er blevet annulleret';
 $_['text_subscription_cancel_confirm']  = 'Vil du opsige abonnementet?';
+$_['text_mollie_open_payment'] 			= 'Der er stadig en åben betaling på <strong>%s</strong> for denne ordre.';
 
 // Button
 $_['button_retry']  = 'Vend tilbage til betalingssiden';
 $_['button_report'] = 'Rapportér fejl';
 $_['button_submit'] = 'Send';
 $_['button_subscription_cancel'] = 'Annuller abonnement';
+$_['button_mollie_pay_now']	= 'Betal nu';
 
 // Entry
 $_['entry_card_holder'] = 'Kortindehaverens navn';

@@ -1,16 +1,19 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\Resources\Payment;
 use Mollie\Api\Resources\PaymentCollection;
+
 class SubscriptionPaymentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "customers_subscriptions_payments";
     protected $customerId = null;
     protected $subscriptionId = null;
+    
     /**
      * Retrieves a paginated collection of Subscription Payments from Mollie.
      *
@@ -29,6 +32,7 @@ class SubscriptionPaymentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpoi
         $this->subscriptionId = $subscriptionId;
         return $this->rest_list($from, $limit, $parameters);
     }
+    
     /**
      * Get the object that is used by this API endpoint. Every API endpoint uses one type of object.
      *
@@ -38,6 +42,7 @@ class SubscriptionPaymentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpoi
     {
         return new \Mollie\Api\Resources\Payment($this->client);
     }
+    
     /**
      * Get the collection object that is used by this API endpoint. Every API endpoint uses one type of collection object.
      *
@@ -50,6 +55,7 @@ class SubscriptionPaymentEndpoint extends \Mollie\Api\Endpoints\CollectionEndpoi
     {
         return new \Mollie\Api\Resources\PaymentCollection($this->client, $count, $_links);
     }
+    
     public function getResourcePath()
     {
         if (\is_null($this->customerId)) {

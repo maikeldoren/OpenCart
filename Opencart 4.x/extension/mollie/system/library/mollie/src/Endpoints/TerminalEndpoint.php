@@ -1,18 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\Resources\LazyCollection;
 use Mollie\Api\Resources\Terminal;
 use Mollie\Api\Resources\TerminalCollection;
+
 class TerminalEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "terminals";
+    
     /**
      * @var string
      */
     public const RESOURCE_ID_PREFIX = 'term_';
+    
     /**
      * @return Terminal
      */
@@ -20,6 +25,7 @@ class TerminalEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\Terminal($this->client);
     }
+    
     /**
      * Get the collection object that is used by this API endpoint. Every API endpoint uses one type of collection object.
      *
@@ -32,6 +38,7 @@ class TerminalEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
     {
         return new \Mollie\Api\Resources\TerminalCollection($this->client, $count, $_links);
     }
+    
     /**
      * Retrieve terminal from Mollie.
      *
@@ -49,20 +56,22 @@ class TerminalEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
         }
         return parent::rest_read($terminalId, $parameters);
     }
+    
     /**
      * Retrieves a collection of Terminals from Mollie for the current organization / profile, ordered from newest to oldest.
      *
-     * @param string $from The first terminal ID you want to include in your list.
-     * @param int $limit
+     * @param string|null $from The first terminal ID you want to include in your list.
+     * @param int|null $limit
      * @param array $parameters
      *
      * @return TerminalCollection
      * @throws ApiException
      */
-    public function page($from = null, $limit = null, array $parameters = [])
+    public function page(?string $from = null, ?int $limit = null, array $parameters = [])
     {
         return $this->rest_list($from, $limit, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over terminals retrieved from Mollie.
      *

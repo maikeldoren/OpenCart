@@ -1,14 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\Resources\Chargeback;
 use Mollie\Api\Resources\ChargebackCollection;
 use Mollie\Api\Resources\LazyCollection;
+
 class ChargebackEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstract
 {
     protected $resourcePath = "chargebacks";
+    
     /**
      * Get the object that is used by this API endpoint. Every API endpoint uses one type of object.
      *
@@ -18,6 +22,7 @@ class ChargebackEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstrac
     {
         return new \Mollie\Api\Resources\Chargeback($this->client);
     }
+    
     /**
      * Get the collection object that is used by this API endpoint. Every API endpoint uses one type of collection object.
      *
@@ -30,6 +35,7 @@ class ChargebackEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstrac
     {
         return new \Mollie\Api\Resources\ChargebackCollection($this->client, $count, $_links);
     }
+    
     /**
      * Retrieves a collection of Chargebacks from Mollie.
      *
@@ -44,6 +50,7 @@ class ChargebackEndpoint extends \Mollie\Api\Endpoints\CollectionEndpointAbstrac
     {
         return $this->rest_list($from, $limit, $parameters);
     }
+    
     /**
      * Create an iterator for iterating over chargeback retrieved from Mollie.
      *

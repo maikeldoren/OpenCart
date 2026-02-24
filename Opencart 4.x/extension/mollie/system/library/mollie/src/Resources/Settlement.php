@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\Types\SettlementStatus;
+
 class Settlement extends \Mollie\Api\Resources\BaseResource
 {
     /**
@@ -12,12 +15,14 @@ class Settlement extends \Mollie\Api\Resources\BaseResource
      * @var string
      */
     public $id;
+    
     /**
      * The settlement reference. This corresponds to an invoice that's in your Dashboard.
      *
      * @var string
      */
     public $reference;
+    
     /**
      * UTC datetime the payment was created in ISO-8601 format.
      *
@@ -25,6 +30,7 @@ class Settlement extends \Mollie\Api\Resources\BaseResource
      * @var string
      */
     public $createdAt;
+    
     /**
      * The date on which the settlement was settled, in ISO 8601 format. When requesting the open settlement or next settlement the return value is null.
      *
@@ -32,34 +38,40 @@ class Settlement extends \Mollie\Api\Resources\BaseResource
      * @var string|null
      */
     public $settledAt;
+    
     /**
      * Status of the settlement.
      *
      * @var string
      */
     public $status;
+    
     /**
      * Total settlement amount in euros.
      *
      * @var \stdClass
      */
     public $amount;
+    
     /**
      * Revenues and costs nested per year, per month, and per payment method.
      *
      * @var \stdClass
      */
     public $periods;
+    
     /**
      * The ID of the invoice on which this settlement is invoiced, if it has been invoiced.
      *
      * @var string|null
      */
     public $invoiceId;
+    
     /**
      * @var \stdClass
      */
     public $_links;
+    
     /**
      * Is this settlement still open?
      *
@@ -69,6 +81,7 @@ class Settlement extends \Mollie\Api\Resources\BaseResource
     {
         return $this->status === \Mollie\Api\Types\SettlementStatus::STATUS_OPEN;
     }
+    
     /**
      * Is this settlement pending?
      *
@@ -78,6 +91,7 @@ class Settlement extends \Mollie\Api\Resources\BaseResource
     {
         return $this->status === \Mollie\Api\Types\SettlementStatus::STATUS_PENDING;
     }
+    
     /**
      * Is this settlement paid out?
      *
@@ -87,6 +101,7 @@ class Settlement extends \Mollie\Api\Resources\BaseResource
     {
         return $this->status === \Mollie\Api\Types\SettlementStatus::STATUS_PAIDOUT;
     }
+    
     /**
      * Has this settlement failed?
      *
@@ -96,6 +111,7 @@ class Settlement extends \Mollie\Api\Resources\BaseResource
     {
         return $this->status === \Mollie\Api\Types\SettlementStatus::STATUS_FAILED;
     }
+    
     /**
      * Retrieve the first page of payments associated with this settlement.
      *
@@ -104,10 +120,11 @@ class Settlement extends \Mollie\Api\Resources\BaseResource
      * @return PaymentCollection
      * @throws \Mollie\Api\Exceptions\ApiException
      */
-    public function payments(int $limit = null, array $parameters = []) : \Mollie\Api\Resources\PaymentCollection
+    public function payments(?int $limit = null, array $parameters = []) : \Mollie\Api\Resources\PaymentCollection
     {
         return $this->client->settlementPayments->pageForId($this->id, null, $limit, $parameters);
     }
+    
     /**
      * Retrieve the first page of refunds associated with this settlement.
      *
@@ -116,10 +133,11 @@ class Settlement extends \Mollie\Api\Resources\BaseResource
      * @return RefundCollection
      * @throws ApiException
      */
-    public function refunds(int $limit = null, array $parameters = [])
+    public function refunds(?int $limit = null, array $parameters = [])
     {
         return $this->client->settlementRefunds->pageForId($this->id, null, $limit, $parameters);
     }
+    
     /**
      * Retrieve the first page of chargebacks associated with this settlement.
      *
@@ -128,10 +146,11 @@ class Settlement extends \Mollie\Api\Resources\BaseResource
      * @return ChargebackCollection
      * @throws ApiException
      */
-    public function chargebacks(int $limit = null, array $parameters = [])
+    public function chargebacks(?int $limit = null, array $parameters = [])
     {
         return $this->client->settlementChargebacks->pageForId($this->id, null, $limit, $parameters);
     }
+    
     /**
      * Retrieve the first page of cap associated with this settlement.
      *
@@ -140,7 +159,7 @@ class Settlement extends \Mollie\Api\Resources\BaseResource
      * @return CaptureCollection
      * @throws ApiException
      */
-    public function captures(int $limit = null, array $parameters = [])
+    public function captures(?int $limit = null, array $parameters = [])
     {
         return $this->client->settlementCaptures->pageForId($this->id, null, $limit, $parameters);
     }

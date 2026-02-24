@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mollie\Api\Resources;
 
 use Mollie\Api\MollieApiClient;
+
 #[\AllowDynamicProperties]
 class ResourceFactory
 {
@@ -21,15 +24,16 @@ class ResourceFactory
         }
         return $resource;
     }
+    
     /**
      * @param MollieApiClient $client
      * @param string $resourceClass
      * @param array $data
-     * @param null $_links
-     * @param string $resourceCollectionClass
+     * @param mixed $_links
+     * @param string|null $resourceCollectionClass
      * @return mixed
      */
-    public static function createBaseResourceCollection(\Mollie\Api\MollieApiClient $client, $resourceClass, $data, $_links = null, $resourceCollectionClass = null)
+    public static function createBaseResourceCollection(\Mollie\Api\MollieApiClient $client, string $resourceClass, array $data, $_links = null, ?string $resourceCollectionClass = null)
     {
         $resourceCollectionClass = $resourceCollectionClass ?: $resourceClass . 'Collection';
         $data = $data ?: [];
@@ -39,15 +43,16 @@ class ResourceFactory
         }
         return $result;
     }
+    
     /**
      * @param MollieApiClient $client
      * @param array $input
      * @param string $resourceClass
-     * @param null $_links
-     * @param null $resourceCollectionClass
+     * @param mixed $_links
+     * @param string|null $resourceCollectionClass
      * @return mixed
      */
-    public static function createCursorResourceCollection($client, array $input, $resourceClass, $_links = null, $resourceCollectionClass = null)
+    public static function createCursorResourceCollection($client, array $input, string $resourceClass, $_links = null, ?string $resourceCollectionClass = null)
     {
         if (null === $resourceCollectionClass) {
             $resourceCollectionClass = $resourceClass . 'Collection';
