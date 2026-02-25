@@ -3,7 +3,7 @@
 # Changelog #
 
 #### Changes in release 13.5.0
-  + **🚀 Compatibility & Core Enhancements**
+  + ** Compatibility & Core Enhancements**
     + OpenCart 4.1.0.3+ Support: Fully updated event triggers and array structures.
     + PHP 8.1+ Strict Mode Compatibility: Massive code overhaul to resolve Fatal Errors, added strict type hinting, and safe array fallbacks.
     + Multi-Theme Path Resolution: Intelligent physical template path resolution for heavy custom themes (like Cibazaar).
@@ -12,23 +12,23 @@
     + Robust Template Injections: Replaced fragile `str_replace` with smart Regex (`preg_replace`) patterns.
     + Bootstrap 5 Update: UI elements updated to use Bootstrap 5 syntax (`data-bs-toggle`).
     + Expanded Localization: Added frontend translations for 10 languages.
-  + **🛡️ Security & Database Stability**
+  + **️ Security & Database Stability**
     + SQL Injection Prevention: Patched vulnerabilities with strict `(int)` casting and `db->escape()`.
     + Database Null-Safety: Hardened models with strict `num_rows` validations to prevent array offset crashes.
     + Webhook Stability Fix: Fixed a critical PHP 8.1 Fatal Error during cancelled transaction webhooks (Refund object checks).
     + Checkout Calculation Stability: Enforced strict type casting during checkout operations to eliminate math-on-string errors.
     + Graceful cURL Error Handling: Replaced legacy `die()` functions with `RuntimeException` throws.
-  + **👤 Customer Account & Frontend Features**
+  + ** Customer Account & Frontend Features**
     + Open Payment Alert: Smart banner on Order Information page with a direct "Pay Now" button for open payment links.
     + Smart Subscription Cancellation: Safely replaces default cancel button with dedicated Mollie API cancel button.
-  + **📧 Email & Payment Link Flow**
+  + ** Email & Payment Link Flow**
     + Fixed Deprecated Email Triggers: Migrated to correct OpenCart 4 routes (`mail/order_add` and `mail/order_history`).
     + Strict Toggle Verification: Fixed bug where payment link emails generated on routine status updates.
     + Separate vs. Combined Emails: Correctly respects the "Send Separate Email" merchant setting.
     + Template Regex Fix: Safely targets the `{{ text_footer }}` variable directly.
     + Email Subject Variables: Fixed unparsed `{order_id}` and `{store_name}` variables in email subjects.
     + Gmail Image Proxy Fix: Enforced absolute URLs to prevent store logo blocking.
-  + **🛒 Admin & Checkout Improvements**
+  + ** Admin & Checkout Improvements**
     + Admin-Only Payment Link Method: Hidden from storefront checkout, only appears in Admin order creation.
     + Targeted Tab Visibility: Mollie payment tab strictly hidden unless order was paid via Mollie.
     + Auto-Reload on Order Creation: Smart AJAX listeners automatically redirect to correct order URL after manual creation.
