@@ -926,8 +926,10 @@ class Mollie extends \Opencart\System\Engine\Controller {
 
             // Debug mode
             if ($this->config->get($this->mollieHelper->getModuleCode() . "_debug_mode")) {
-                $this->writeToMollieDebugLog("Mollie order creation data :");
-                $this->writeToMollieDebugLog(json_encode($data));
+                $this->writeToMollieDebugLog("===== DEBUG: DATA SENT TO MOLLIE (ORDER API) =====");
+                $this->writeToMollieDebugLog("SESSION ID BEFORE LEAVING: " . $this->session->getId());
+                $this->writeToMollieDebugLog("PAYLOAD: " . print_r($data, true));
+                $this->writeToMollieDebugLog("==================================================");
             }
 
             // Create Order
@@ -948,7 +950,8 @@ class Mollie extends \Opencart\System\Engine\Controller {
         } else {
             $this->writeToMollieLog("Orders API: Order created for order_id - " . $order['order_id'] . " but mollie_order_id - " . $orderObject->id . " not saved in the database. Should be updated when webhook called.");
         }
-
+		
+		$this->setSameSiteCookie();
         $this->redirect($orderObject->_links->checkout->href, 303);
     }
 
@@ -1127,10 +1130,13 @@ class Mollie extends \Opencart\System\Engine\Controller {
             }
 
             $data["locale"] = $locale;
-
+			
+			// Debug mode
             if ($this->config->get($this->mollieHelper->getModuleCode() . "_debug_mode")) {
-                $this->writeToMollieDebugLog("Mollie payment creation data :");
-                $this->writeToMollieDebugLog(json_encode($data));
+                $this->writeToMollieDebugLog("===== DEBUG: DATA SENT TO MOLLIE (PAYMENT API) =====");
+                $this->writeToMollieDebugLog("SESSION ID BEFORE LEAVING: " . $this->session->getId());
+                $this->writeToMollieDebugLog("PAYLOAD: " . print_r($data, true));
+                $this->writeToMollieDebugLog("====================================================");
             }
 
             // Create Payment
@@ -1151,8 +1157,9 @@ class Mollie extends \Opencart\System\Engine\Controller {
         } else {
             $this->writeToMollieLog("Payments API: Payment created for order_id - " . $order['order_id'] . " but mollie_payment_id - " . $paymentObject->id . " not saved in the database. Should be updated when webhook called.");
         }
-
-        $this->redirect($orderObject->_links->checkout->href, 303);
+		
+		$this->setSameSiteCookie();
+        $this->redirect($paymentObject->_links->checkout->href, 303);
     }
 
     /**
@@ -1724,6 +1731,16 @@ class Mollie extends \Opencart\System\Engine\Controller {
     public function callback(): mixed {
         $order_id = $this->getOrderID();
         $moduleCode = $this->mollieHelper->getModuleCode();
+		 
+		 // Debug mode
+        if ($this->config->get($moduleCode . "_debug_mode")) {
+            $this->writeToMollieDebugLog("===== DEBUG: RETURNED FROM MOLLIE (CALLBACK) =====");
+            $this->writeToMollieDebugLog("CURRENT SESSION ID: " . $this->session->getId());
+            $this->writeToMollieDebugLog("RECEIVED COOKIES: " . print_r($this->request->cookie, true));
+            $this->writeToMollieDebugLog("RECEIVED GET URL VARS: " . print_r($this->request->get, true));
+            $this->writeToMollieDebugLog("CURRENT SESSION DATA: " . print_r($this->session->data, true));
+            $this->writeToMollieDebugLog("==================================================");
+        }
 
         if ($order_id === false) {
             $this->writeToMollieLog("Callback : Failed to get order id.");
@@ -1769,9 +1786,11 @@ class Mollie extends \Opencart\System\Engine\Controller {
             $orderDetails = $this->getAPIClient()->payments->get($mollie_payment_id);
         }
 
+        // Debug mode
         if ($this->config->get($moduleCode . "_debug_mode")) {
-            $this->writeToMollieDebugLog("Callback: Mollie callback order data :");
-            $this->writeToMollieDebugLog(json_encode($orderDetails));
+            $this->writeToMollieDebugLog("===== DEBUG: MOLLIE API ORDER DETAILS =====");
+            $this->writeToMollieDebugLog(print_r(json_decode(json_encode($orderDetails), true), true));
+            $this->writeToMollieDebugLog("===========================================");
         }
 
         // Create subscriptions if any
@@ -1795,19 +1814,21 @@ class Mollie extends \Opencart\System\Engine\Controller {
             }
         }
 
+        $args = 'language=' . $this->config->get('config_language');
+
         if ($success_redirect) {
             $this->writeToMollieLog("Callback: Success redirect to success page for order - {$order['order_id']}, {$mollie_order_id}");
-
             unset($this->session->data['mollie_issuer']);
-
-            // Redirect to 'success' page.
-            $this->redirect($this->url->link('checkout/success', 'language=' . $this->config->get('config_language'), true));
-
+            
+            $this->setSameSiteCookie();
+            $this->redirect($this->url->link('checkout/success', $args, true));
             return true;
         } else {
             if (!(bool)$this->config->get($moduleCode . "_show_order_canceled_page")) {
                 $this->writeToMollieLog("Callback: Payment failed redirect to checkout page for order - {$order['order_id']}, {$mollie_order_id}");
-                $this->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true));
+                
+                $this->setSameSiteCookie();
+                $this->redirect($this->url->link('checkout/checkout', $args, true));
                 return true;
             } else {
                 $this->writeToMollieLog("Callback: Payment failed redirect to failed page for order - {$order['order_id']}, {$mollie_order_id}");
@@ -1863,8 +1884,10 @@ class Mollie extends \Opencart\System\Engine\Controller {
             $data['mollie_error'] = $api_error;
         }
 
+        $args = 'language=' . $this->config->get('config_language');
+
         if ($show_retry_button) {
-            $data['checkout_url'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
+            $data['checkout_url'] = $this->url->link('checkout/checkout', $args, true);
             $data['button_retry'] = $this->language->get("button_retry");
         }
 
@@ -1872,7 +1895,7 @@ class Mollie extends \Opencart\System\Engine\Controller {
         $data['method_separator']  = $this->getMethodSeparator();
 
         $data['button_continue'] = $this->language->get('button_continue');
-        $data['continue'] = $this->url->link('common/home');
+        $data['continue'] = $this->url->link('common/home', $args, true);
 
         $data['show_report_button'] = $show_report_button;
         $data['button_report'] = $this->language->get("button_report");
@@ -1936,6 +1959,22 @@ class Mollie extends \Opencart\System\Engine\Controller {
      */
     protected function redirect(string $url, int $status = 302): void {
         $this->response->redirect($url, $status);
+    }
+	
+	private function setSameSiteCookie(): void {
+        $session_id = $this->session->getId();
+        $session_name = $this->config->get('session_name') ?? session_name() ?? 'OCSESSID';
+
+        if ($session_id) {
+            setcookie($session_name, $session_id, [
+                'expires'  => time() + 86400,
+                'path'     => ini_get('session.cookie_path') ?: '/',
+                'domain'   => ini_get('session.cookie_domain') ?: '',
+                'secure'   => true,
+                'httponly' => true,
+                'samesite' => 'None'
+            ]);
+        }
     }
 
     private function createCustomer(array $data): string {

@@ -12,11 +12,13 @@
     + Robust Template Injections: Replaced fragile `str_replace` with smart Regex (`preg_replace`) patterns.
     + Bootstrap 5 Update: UI elements updated to use Bootstrap 5 syntax (`data-bs-toggle`).
     + Expanded Localization: Added frontend translations for 10 languages.
+	+ Updated debug mode.
   + **️ Security & Database Stability**
     + SQL Injection Prevention: Patched vulnerabilities with strict `(int)` casting and `db->escape()`.
     + Database Null-Safety: Hardened models with strict `num_rows` validations to prevent array offset crashes.
     + Webhook Stability Fix: Fixed a critical PHP 8.1 Fatal Error during cancelled transaction webhooks (Refund object checks).
     + Checkout Calculation Stability: Enforced strict type casting during checkout operations to eliminate math-on-string errors.
+	+ OpenCart 4 Session Drop Fix: Engineered a pre-redirect cookie modifier (SameSite logic) to completely eliminate dropped sessions and cart resets when customers return from an aborted payment.
     + Graceful cURL Error Handling: Replaced legacy `die()` functions with `RuntimeException` throws.
   + ** Customer Account & Frontend Features**
     + Open Payment Alert: Smart banner on Order Information page with a direct "Pay Now" button for open payment links.
