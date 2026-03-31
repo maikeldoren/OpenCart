@@ -41,6 +41,7 @@ $_['ideal_title']               = 'Votre paiement';
 $_['text_title']                = 'Payez en ligne';
 $_['text_redirected']           = 'Le client a été renvoyé à l\'écran de paiement';
 $_['text_issuer_giftcard']      = 'Sélectionnez votre carte-cadeau:';
+$_['text_issuer_ideal']         = 'Choisissez votre banque';
 $_['text_issuer_kbc']           = 'Sélectionnez votre bouton de paiement:';
 $_['text_issuer_voucher']       = 'Sélectionnez votre marque:';
 $_['text_card_details']         = 'S\'il vous plaît entrer les détails de votre carte de crédit.';
@@ -109,7 +110,7 @@ $_['refund_cancelled']   = 'Le remboursement a été annulé.';
 $_['refund_success'] 	 = 'Le remboursement a été traité avec succès!';
 
 // Methods
-$_['method_ideal']          = 'iDEAL';
+$_['method_ideal']          = 'iDEAL | Wero';
 $_['method_creditcard']     = 'Creditcard';
 $_['method_bancontact']     = 'Bancontact';
 $_['method_banktransfer']   = 'Bank transfer';
@@ -124,7 +125,7 @@ $_['method_klarnasliceit']  = 'Klarna Slice It';
 $_['method_przelewy24']     = 'P24';
 $_['method_applepay']    	= 'Apple Pay';
 $_['method_voucher']    	= 'Voucher';
-$_['method_in3']    	    = 'iDEAL in3';
+$_['method_in3']    	    = 'iDEAL | Wero in3';
 $_['method_mybank']         = 'MyBank';
 $_['method_billie']         = 'Billie';
 $_['method_klarna']         = 'Payer avec Klarna';

@@ -32,7 +32,7 @@
  */
 
 /**
- * English language file for iDEAL by Mollie
+ * Portuguese language file for iDEAL | Wero by Mollie
  */
 
 // Text
@@ -41,6 +41,7 @@ $_['ideal_title']                       = 'Seu pagamento';
 $_['text_title']                        = 'Pagar online';
 $_['text_redirected']                   = 'O cliente foi encaminhado para a tela de pagamento';
 $_['text_issuer_giftcard']              = 'Selecione seu cartão-presente';
+$_['text_issuer_ideal']                 = 'Escolha o seu banco';
 $_['text_issuer_kbc']                   = 'Selecione seu botão de pagamento.';
 $_['text_issuer_voucher']               = 'Selecione sua marca.';
 $_['text_card_details']                 = 'Por favor, insira os dados do seu cartão de crédito.';
@@ -109,7 +110,7 @@ $_['refund_cancelled']      = 'O reembolso foi cancelado.';
 $_['refund_success']        = 'O reembolso foi processado com sucesso!';
 
 // Methods
-$_['method_ideal']          = 'iDEAL';
+$_['method_ideal']          = 'iDEAL | Wero';
 $_['method_creditcard']     = 'Creditcard';
 $_['method_bancontact']     = 'Bancontact';
 $_['method_banktransfer']   = 'Transferência bancária';
@@ -124,7 +125,7 @@ $_['method_klarnasliceit']  = 'Klarna Slice It';
 $_['method_przelewy24']  	= 'P24';
 $_['method_applepay']    	= 'Apple Pay';
 $_['method_voucher']    	= 'Voucher';
-$_['method_in3']    	    = 'iDEAL in3';
+$_['method_in3']    	    = 'iDEAL | Wero in3';
 $_['method_mybank']         = 'MyBank';
 $_['method_billie']         = 'Billie';
 $_['method_klarna']         = 'Pague com Klarna';

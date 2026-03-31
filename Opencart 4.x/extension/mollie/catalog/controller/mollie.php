@@ -246,10 +246,15 @@ class Mollie extends \Opencart\System\Engine\Controller {
 
         $method = str_replace('_', '', $method);
 
-        if ($method == 'ideal') {
-            $payment_method = $this->getAPIClient()->methods->get($method);
-        } else {
-            $payment_method = $this->getAPIClient()->methods->get($method, ['include' => 'issuers']);
+        try {
+            if ($method == 'ideal') {
+                $payment_method = $this->getAPIClient()->methods->get($method);
+            } else {
+                $payment_method = $this->getAPIClient()->methods->get($method, ['include' => 'issuers']);
+            }
+        } catch (\Exception $e) {
+            $this->writeToMollieLog("Error getting payment method " . $method . ": " . $e->getMessage());
+            return '';
         }
 
         $api_to_use = $this->config->get($this->mollieHelper->getModuleCode() . "_" . static::MODULE_NAME . "_api_to_use");
@@ -275,12 +280,6 @@ class Mollie extends \Opencart\System\Engine\Controller {
             $data['set_issuer_url']      = $this->url->link("extension/mollie/payment/mollie_" . static::MODULE_NAME . $this->getMethodSeparator() . "set_issuer", '', true);
         }
         
-        $data['entry_card_holder']       = $this->language->get('entry_card_holder');
-        $data['entry_card_number']       = $this->language->get('entry_card_number');
-        $data['entry_expiry_date']       = $this->language->get('entry_expiry_date');
-        $data['entry_verification_code'] = $this->language->get('entry_verification_code');
-        $data['text_card_details']       = $this->language->get('text_card_details');
-        $data['error_card']              = $this->language->get('error_card');
         $data['text_mollie_payments']    = sprintf($this->language->get('text_mollie_payments'), '<a href="https://www.mollie.com/" target="_blank"><img src="./image/mollie/mollie_logo.png" alt="Mollie" border="0"></a>');
 
         // Mollie components
@@ -289,10 +288,16 @@ class Mollie extends \Opencart\System\Engine\Controller {
         if ($method == 'creditcard') {
             if ($this->config->get($this->mollieHelper->getModuleCode() . "_mollie_component") && !$this->config->get($this->mollieHelper->getModuleCode() . "_single_click_payment")) {
                 
-                $data['currentProfile'] = $this->getAPIClient()->profiles->getCurrent()->id;
+                try {
+                    $data['currentProfile'] = $this->getAPIClient()->profiles->getCurrent()->id;
+                } catch (\Exception $e) {
+                    $this->writeToMollieLog("Error getting current profile for components: " . $e->getMessage());
+                    $data['mollieComponents'] = false;
+                }
 
                 $language_code = (string)($this->session->data['language'] ?? $this->config->get('config_language'));
                 
+                $locale = 'en_US';
                 if (str_contains($language_code, '-')) {
                     list ($lang, $country) = explode('-', $language_code);
                     $locale = strtolower($lang) . '_' . strtoupper($country);
@@ -301,16 +306,16 @@ class Mollie extends \Opencart\System\Engine\Controller {
                 }
 
                 if (!in_array($locale, $this->locales)) {
-                    $locale = (string)$this->config->get($this->mollieHelper->getModuleCode() . "_payment_screen_language");
-                    if (str_contains($locale, '-')) {
-                        list ($lang, $country) = explode('-', $locale);
+                    $locale_setting = (string)$this->config->get($this->mollieHelper->getModuleCode() . "_payment_screen_language");
+                    if (str_contains($locale_setting, '-')) {
+                        list ($lang, $country) = explode('-', $locale_setting);
                         $locale = strtolower($lang) . '_' . strtoupper($country);
                     } else {
-                        $locale = strtolower($locale) . '_' . strtoupper($locale);
+                        $locale = strtolower($locale_setting) . '_' . strtoupper($locale_setting);
                     }
                 }
 
-                if (strtolower($locale) == 'en_gb' || strtolower($locale) == 'en_en') {
+                if (in_array(strtolower($locale), ['en_gb', 'en_en'])) {
                     $locale = 'en_US';
                 }
                 
@@ -326,7 +331,7 @@ class Mollie extends \Opencart\System\Engine\Controller {
         }
 
         $data['isJournalTheme'] = false;
-        if (str_starts_with((string)$this->config->get('config_template'), 'journal2') && $this->journal2->settings->get('journal_checkout')) {
+        if (str_starts_with((string)$this->config->get('config_template'), 'journal2') && isset($this->journal2) && $this->journal2->settings->get('journal_checkout')) {
             $data['isJournalTheme'] = true;
         }
 
@@ -452,7 +457,7 @@ class Mollie extends \Opencart\System\Engine\Controller {
         }
 
         $currency = $this->getCurrency();
-        $amount = $this->convertCurrency((float)$order['total']);
+        $amount = $this->convertCurrency((float)($order['total'] ?? 0));
         $return_url = $this->url->link("extension/mollie/payment/mollie_" . static::MODULE_NAME . $this->getMethodSeparator() . "callback&order_id=" . $order['order_id']);
         $issuer = $this->getIssuer();
 
@@ -777,6 +782,12 @@ class Mollie extends \Opencart\System\Engine\Controller {
             if (!empty($otherOrderTotals)) {
                 foreach ($otherOrderTotals as $orderTotals) {
                     $taxClass = (int)$this->config->get('total_' . $orderTotals['code'] . '_tax_class_id');
+
+                    // Generic fallback: If a custom total has no tax class, use the store default to prevent API rejection
+                    if (!$taxClass && (float)$orderTotals['value'] != 0) {
+                        $taxClass = (int)$this->config->get('config_tax_class_id');
+                    }
+
                     $tax_rates = $this->tax->getRates((float)$orderTotals['value'], $taxClass);
                     $rates = $this->getTaxRate($tax_rates);
                     $vatRate = (float)($rates[0] ?? 0);
@@ -799,7 +810,7 @@ class Mollie extends \Opencart\System\Engine\Controller {
                 }
             }
             
-            // Check for rounding off issue in a general way (for all possible totals)
+            // Standardized Rounding Fix: Ensure Mollie sum matches OpenCart exactly
             $orderTotal = (float)$this->numberFormat($amount);
             $orderLineTotal = 0.0;
 
@@ -810,25 +821,27 @@ class Mollie extends \Opencart\System\Engine\Controller {
             $orderLineTotal = (float)$this->numberFormat($orderLineTotal);
             
             if ($orderTotal > $orderLineTotal) {
+                // Sum of lines is lower than grand total -> Add a surcharge!
                 $amountDiff = (float)$this->numberFormat($orderTotal - $orderLineTotal);
-                $lines[] = [
-                    'type'          => 'discount',
-                    'name'          => (string)$this->formatText($this->language->get("roundoff_description")),
-                    'quantity'      => 1,
-                    'unitPrice'     => ["currency" => $currency, "value" => (string)$amountDiff],
-                    'totalAmount'   => ["currency" => $currency, "value" => (string)$amountDiff],
-                    'vatRate'       => "0",
-                    'vatAmount'     => ["currency" => $currency, "value" => (string)$this->numberFormat(0.00)]
-                ];
-            } elseif ($orderTotal < $orderLineTotal) {
-                $amountDiff = (float)$this->numberFormat(-($orderLineTotal - $orderTotal));
                 $lines[] = [
                     'type'          => 'surcharge',
                     'name'          => (string)$this->formatText($this->language->get("roundoff_description")),
                     'quantity'      => 1,
                     'unitPrice'     => ["currency" => $currency, "value" => (string)$amountDiff],
                     'totalAmount'   => ["currency" => $currency, "value" => (string)$amountDiff],
-                    'vatRate'       => "0",
+                    'vatRate'       => "0.00",
+                    'vatAmount'     => ["currency" => $currency, "value" => (string)$this->numberFormat(0.00)]
+                ];
+            } elseif ($orderTotal < $orderLineTotal) {
+                // Sum of lines is higher than grand total -> Add a discount (negative price)!
+                $amountDiff = (float)$this->numberFormat($orderTotal - $orderLineTotal); // Result is negative for discounts
+                $lines[] = [
+                    'type'          => 'discount',
+                    'name'          => (string)$this->formatText($this->language->get("roundoff_description")),
+                    'quantity'      => 1,
+                    'unitPrice'     => ["currency" => $currency, "value" => (string)$amountDiff],
+                    'totalAmount'   => ["currency" => $currency, "value" => (string)$amountDiff],
+                    'vatRate'       => "0.00",
                     'vatAmount'     => ["currency" => $currency, "value" => (string)$this->numberFormat(0.00)]
                 ];
             }

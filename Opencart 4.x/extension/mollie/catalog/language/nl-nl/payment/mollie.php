@@ -32,7 +32,7 @@
  */
 
 /**
- * Dutch language file for iDEAL by Mollie
+ * Dutch language file for iDEAL | Wero by Mollie
  */
 
 // Text
@@ -40,6 +40,7 @@ $_['heading_title']             = 'Betaling via Mollie';
 $_['ideal_title']               = 'Uw betaling';
 $_['text_title']                = 'Online betalen';
 $_['text_redirected']           = 'De klant is doorgestuurd naar het betaalscherm';
+$_['text_issuer_ideal']         = 'Kies uw bank';
 $_['text_issuer_giftcard']      = 'Kies uw giftcard';
 $_['text_issuer_kbc']           = 'Kies uw betaalknop';
 $_['text_issuer_voucher']       = 'Kies uw merk';
@@ -109,7 +110,7 @@ $_['refund_cancelled']   = 'Restitutie is geannuleerd.';
 $_['refund_success'] 	 = 'Terugbetaling is succesvol verwerkt!';
 
 // Methods
-$_['method_ideal']          = 'iDEAL';
+$_['method_ideal']          = 'iDEAL | Wero';
 $_['method_creditcard']     = 'Creditcard';
 $_['method_bancontact']     = 'Bancontact';
 $_['method_banktransfer']   = 'Overboeking';
@@ -124,7 +125,7 @@ $_['method_klarnasliceit']  = 'Klarna Betaal in 3 delen';
 $_['method_przelewy24']  	= 'P24';
 $_['method_applepay']    	= 'Apple Pay';
 $_['method_voucher']    	= 'Voucher';
-$_['method_in3']    	    = 'iDEAL in3';
+$_['method_in3']    	    = 'iDEAL | Wero in3';
 $_['method_mybank']         = 'MyBank';
 $_['method_billie']         = 'Billie';
 $_['method_klarna']         = 'Betaal met Klarna';
