@@ -3,9 +3,15 @@
 # Changelog #
 
 #### Changes in release 13.5.0
+  + ** Branding & Compliance**
+    + Mandatory iDEAL | Wero Rebranding: Full rebranding of iDEAL to "iDEAL | Wero" and "iDEAL in3" to "iDEAL | Wero in3" across storefront, checkout, and admin dashboard.
+    + Updated Branding Assets: Implemented new high-resolution Wero logo compliance across all 10 supported languages.
+    + Issuer Selection Localization: Injected missing `text_issuer_ideal` language keys for all international locales (DA, DE, ES, FR, IT, NB, PT, SV) to provide localized bank selection instructions.
   + ** Compatibility & Core Enhancements**
     + OpenCart 4.1.0.3+ Support: Fully updated event triggers and array structures.
     + PHP 8.1+ Strict Mode Compatibility: Massive code overhaul to resolve Fatal Errors, added strict type hinting, and safe array fallbacks.
+	+ PHP 8.5 Future-Proofing: Eliminated all deprecated `curl_close()` and `curl_multi_close()` calls throughout the core Mollie library and helpers to prevent fatal errors in upcoming PHP versions.
+    + Language Header Sanitization: Fixed incorrect language headers in Nordic and Mediterranean catalog files to match their respective locales.
     + Multi-Theme Path Resolution: Intelligent physical template path resolution for heavy custom themes (like Cibazaar).
     + Wildcard Event Routing: Fallback triggers with strict performance safeguards.
     + Payment Methods Structure: Updated to OpenCart 4.0.2.0+ format.
