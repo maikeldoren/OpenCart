@@ -40,7 +40,7 @@ class mollieHttpClient
         $server_output = curl_exec($ch);
         $error = curl_error($ch);
         
-        curl_close($ch);
+
 
         if ($server_output === false) {
             throw new \RuntimeException('mollieHttpClient POST Error: ' . $error);
@@ -82,7 +82,7 @@ class mollieHttpClient
         $server_output = curl_exec($ch);
         $error = curl_error($ch);
         
-        curl_close($ch);
+
 
         if ($server_output === false) {
             throw new \RuntimeException('mollieHttpClient GET Error: ' . $error);

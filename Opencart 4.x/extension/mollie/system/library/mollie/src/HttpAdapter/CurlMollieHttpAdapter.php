@@ -111,7 +111,6 @@ final class CurlMollieHttpAdapter implements \Mollie\Api\HttpAdapter\MollieHttpA
         }
         
         $statusCode = \curl_getinfo($curl, \CURLINFO_RESPONSE_CODE);
-        \curl_close($curl);
         return $this->parseResponseBody($response, $statusCode, $httpBody);
     }
     

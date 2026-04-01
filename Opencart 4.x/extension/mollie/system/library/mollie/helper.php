@@ -224,8 +224,6 @@ class MollieHelper {
 		$response = curl_exec($ch);
 		$error = curl_error($ch);
 
-		curl_close($ch);
-
         if (!$response) {
             throw new \RuntimeException('Mollie Helper Error: Nothing was returned from CURL request. Error: ' . $error);
         }
