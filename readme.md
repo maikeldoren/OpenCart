@@ -34,7 +34,7 @@ them ready-made into your OpenCart webshop with this powerful plugin.
 - PayPal
 - SEPA Direct Debits
 - SEPA Bank Transfer
-- iDeal
+- iDEAL | Wero
 - Bancontact
 - KBC/CBC Payment Button
 - Belfius Payment Button
