@@ -4,7 +4,7 @@
 <h1 align="center">Mollie for OpenCart</h1>
 
 # Installation [![Build Status](https://travis-ci.org/mollie/OpenCart.png)](https://travis-ci.org/mollie/OpenCart) #
-+ Download the latest release on the [OpenCart Releases](https://github.com/mollie/OpenCart/releases)-page.
++ Download the latest release on the [OpenCart Releases](https://github.com/maikeldoren/OpenCart/releases)-page. 
 + Upload all files from the "upload" folder in the zip to the root of your opencart shop or use the update button in the admin of your shop if you have an earlier version installed.
 + From version 10.0.0 onwards the module will support both the OCmod and vQmod. You are free to use either of them as per your requirements. However we will automatically install (on upgrade or on fresh install) the one which is best suited for you.
 + To switch from vQmod to OCmod just rename the file "root-dir/system/mollie.ocmod.xml_" to "root-dir/system/mollie.ocmod.xml", disable the vQmod file by renaming or deleting it. Finally refresh the modification from admin panel under "Extensions".
